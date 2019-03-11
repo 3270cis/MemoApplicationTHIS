@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
 
         EditText editMemoMessage = (EditText) findViewById(R.id.memo);
 
-
         editMemoMessage.setText(currentMemo.getMemoMessage());
 
 
