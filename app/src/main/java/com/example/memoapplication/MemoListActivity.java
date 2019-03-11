@@ -15,6 +15,8 @@ import java.util.ArrayList;
 public class MemoListActivity extends ListActivity {
 
     ArrayList<Memo> memos;
+    boolean isDeleting = false;
+
     MemoAdapter adapter;
 
     @Override
@@ -46,13 +48,13 @@ public class MemoListActivity extends ListActivity {
             Toast.makeText(this, "Error retrieving contacts", Toast.LENGTH_LONG).show();
         }
 
-        if (contacts.size() > 0) {
+        if (memos.size() > 0) {
             ListView listView = getListView();
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                 @Override
                 public void onItemClick(AdapterView<?> parent, View itemClicked, int position, long id) {
-                    Contact selectedContact = contacts.get(position);
+                    Memo selectedContact = memos.get(position);
                     if (isDeleting) {
                         adapter.showDelete(position, itemClicked, ContactListActivity.this, selectedContact);
                     } else {

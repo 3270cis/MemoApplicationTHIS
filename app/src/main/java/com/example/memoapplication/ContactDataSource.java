@@ -102,6 +102,18 @@ public class ContactDataSource  {
         return memos;
     }
 
+
+    public boolean deleteMemo(int MemoId) {
+        boolean didDelete = false;
+        try {
+            didDelete = database.delete("memo", "_id=" + MemoId, null) > 0;
+        }
+        catch (Exception e) {
+            //Do nothing -return value already set to false
+        }
+        return didDelete;
+    }
+
     //ORIGINAL
 //
 //    public ArrayList<Memo> getContacts(String sortField, String sortOrder) {

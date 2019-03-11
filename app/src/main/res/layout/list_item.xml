@@ -39,31 +39,24 @@
         android:layout_below="@+id/textPriority"
         android:id="@+id/textDate"/>
 
-
-
-
-
-
-
-
-    <!--<Button-->
-        <!--android:text="Delete"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentTop="true"-->
-        <!--android:layout_marginTop="10dp"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_alignParentEnd="true"-->
-        <!--android:layout_marginRight="10dp"-->
-        <!--android:layout_marginEnd="10dp"-->
-        <!--android:textColor="@color/system_red"-->
-        <!--android:background="@color/system_transparent"-->
-        <!--android:visibility="invisible"-->
-        <!--android:focusable="false"-->
-        <!--android:focusableInTouchMode="false"-->
-        <!--android:layout_alignTop="@+id/textContactName"-->
-        <!--android:layout_alignBottom="@+id/textPhoneNumber"-->
-        <!--android:id="@+id/buttonDeleteContact" />-->
+    <Button
+        android:id="@+id/buttonDeleteMemo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textMemo"
+        android:layout_alignBottom="@+id/textPriority"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/system_transparent"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:text="Delete"
+        android:textColor="@color/system_red"
+        android:visibility="invisible" />
 
 
 </RelativeLayout>
