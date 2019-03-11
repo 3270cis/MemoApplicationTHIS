@@ -1,7 +1,6 @@
 package com.example.memoapplication;
 
 import android.content.Intent;
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,7 +10,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MemoActivity extends AppCompatActivity {
 
 
     private Memo currentMemo;
@@ -32,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void initMemo(int id) {
-        ContactDataSource ds = new ContactDataSource(MainActivity.this);
+        ContactDataSource ds = new ContactDataSource(MemoActivity.this);
         try {
             ds.open();
             currentMemo = ds.getSpecificMemo(id);
@@ -58,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(MainActivity.this, MemoListActivity.class);
+                Intent intent = new Intent(MemoActivity.this, MemoListActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
 
@@ -107,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                             currentMemo.setPriority(radioButton.toString());
                         }
 
-                        ContactDataSource ds = new ContactDataSource(MainActivity.this);
+                        ContactDataSource ds = new ContactDataSource(MemoActivity.this);
 
                         try {
                             ds.open();
@@ -115,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                             ds.close();
 
                         } catch (Exception ex) {
-                            Toast.makeText(MainActivity.this,"something went wrong in the initlize memo DB", Toast.LENGTH_LONG ).show();
+                            Toast.makeText(MemoActivity.this,"something went wrong in the initlize memo DB", Toast.LENGTH_LONG ).show();
 
                         }
 

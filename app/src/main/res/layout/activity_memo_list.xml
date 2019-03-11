@@ -12,6 +12,13 @@
         android:theme="?attr/actionBarTheme" />
 
     <Button
+        android:text="Delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/dateButton"
+        android:id="@+id/buttonDelete" />
+
+    <Button
         android:id="@+id/priorityButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
