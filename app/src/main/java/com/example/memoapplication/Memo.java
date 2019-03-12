@@ -13,12 +13,24 @@ public class Memo {
     private int memoID;
     private String memoMessage;
     private String priority;
-    private Calendar dateOfMemo;
+    Calendar calendar;
+
+
+    String dateToStr;
+
 
 
     public Memo(){
-        memoID = 2;
-        dateOfMemo = Calendar.getInstance();
+
+        memoID = 0;
+
+        calendar = Calendar.getInstance();
+
+        SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy hh:mm:ss a");
+
+        dateToStr = format.format(calendar.getTime());
+
+
 
     }
 
@@ -61,14 +73,14 @@ public class Memo {
         this.priority = priority;
     }
 
-    public Calendar getDateOfMemo() {
+    public String getDateOfMemo() {
 
-        return dateOfMemo;
+        return dateToStr;
     }
 
-    public void setDateOfMemo(Calendar dateOfMemo) {
+    public void setDateOfMemo(String dateToStr) {
 
-        this.dateOfMemo = dateOfMemo;
+        this.dateToStr = dateToStr;
     }
 
 

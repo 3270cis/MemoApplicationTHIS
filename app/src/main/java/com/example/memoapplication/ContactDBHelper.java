@@ -11,8 +11,10 @@ public class ContactDBHelper extends SQLiteOpenHelper {
 
     // Database creation sql statement
     private static final String CREATE_TABLE_MEMO =
-            "create table memo (_id integer primary key autoincrement, "
-                    + "memoContent text, priority text, memoDate date);";
+            "create table memo (_id integer, "
+                    + "memoContent text, "
+                    + "priority text, "
+                    + "memoDate date);";
 
     public ContactDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

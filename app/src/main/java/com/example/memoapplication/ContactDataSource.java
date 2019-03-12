@@ -71,6 +71,22 @@ public class ContactDataSource  {
         return memo;
     }
 
+    public int getLastMemoId() {
+        int lastId = -1;
+        try {
+            String query = "Select MAX(_id) from memo";
+            Cursor cursor = database.rawQuery(query, null);
+
+            cursor.moveToFirst();
+            lastId = cursor.getInt(0);
+            cursor.close();
+        }
+        catch (Exception e) {
+            lastId = -1;
+        }
+        return lastId;
+    }
+
 
 
 
@@ -88,7 +104,7 @@ public class ContactDataSource  {
                 newMemo.setMemoID(cursor.getInt(0));
                 newMemo.setMemoMessage(cursor.getString(1));
                 newMemo.setPriority(cursor.getString(2));
-               // newMemo.setDateOfMemo(cursor.getString(3)); //this date is not really working
+                newMemo.setDateOfMemo(cursor.getString(3)); //this date is not really working
 ;
 
                 memos.add(newMemo);

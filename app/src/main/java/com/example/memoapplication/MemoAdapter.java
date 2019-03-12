@@ -41,7 +41,7 @@ public class MemoAdapter extends ArrayAdapter<Memo> {
 
             memoMessage.setText(memo.getMemoMessage());
             priority.setText(memo.getPriority());
-            // memoDate.setText(memo.getDateOfMemo()); //FIX ME
+            memoDate.setText(memo.getDateOfMemo().toString()); //FIX ME
 
             //if the position is an even number, then the contact name text will be red
 //            if(position % 2 == 0 ) {

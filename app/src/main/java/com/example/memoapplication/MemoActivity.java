@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 public class MemoActivity extends AppCompatActivity {
 
@@ -33,7 +34,6 @@ public class MemoActivity extends AppCompatActivity {
     }
 
     public void initMemo(int id) {
-
 
 
         ContactDataSource ds = new ContactDataSource(MemoActivity.this);
@@ -71,6 +71,54 @@ public class MemoActivity extends AppCompatActivity {
         });
 
     }
+//
+//    private void initSaveButton() {
+//        Button saveButton = (Button) findViewById(R.id.saveButton);
+//        saveButton.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                //hideKeyboard();
+//                boolean wasSuccessful = false;
+//
+//
+//                ContactDataSource ds = new ContactDataSource(MemoActivity.this);
+//
+//                try {
+//                    ds.open();
+//
+//                    if (currentMemo.getMemoID() == -1) {
+//
+//                        String radioValue = getRadioValue();
+//                        String memoMessage = getMemoMessage();
+//
+//
+//                        currentMemo.setPriority(radioValue);
+//                        currentMemo.setMemoMessage(memoMessage);
+//
+//                        wasSuccessful = ds.insertMemo(currentMemo);
+//                        int newId = ds.getLastMemoId();
+//                        currentMemo.setMemoID(newId);
+//
+//
+//                    } else {
+//                        //wasSuccessful = ds.updateContact(currentContact);
+//                    }
+//                    ds.close();
+//                } catch (Exception e) {
+//                    wasSuccessful = false;
+//                    Toast.makeText(MemoActivity.this, "something went wrong in the initlize memo DB", Toast.LENGTH_LONG).show();
+//
+//                }
+//
+////                if (wasSuccessful) {
+////                    ToggleButton editToggle = (ToggleButton) findViewById(R.id.toggleButtonEdit);
+////                    editToggle.toggle();
+////                    setForEditing(false);
+////                }
+//            }
+//        });
+//    }
 
     public void initSaveButton() {
 
@@ -79,6 +127,8 @@ public class MemoActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                currentMemo = new Memo();
 
                 //get the value from the getRadioValue method and pass the priority to the current memo
                 String radioValue = getRadioValue();
@@ -108,11 +158,13 @@ public class MemoActivity extends AppCompatActivity {
 
     }
 
+
+
     public String getMemoMessage() {
 
         EditText memoMessage = (EditText) findViewById(R.id.memoMessage);
 
-        return memoMessage.toString();
+        return memoMessage.getText().toString();
 
     }
 
