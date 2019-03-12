@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.Toast;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -30,13 +31,15 @@ public class MemoDataSource {
         try {
             ContentValues initialValues = new ContentValues();
 
-            initialValues.put("_id", m.getMemoID());
+            //initialValues.put("_id", m.getMemoID()); // the ID values are making it complicated
+
             initialValues.put("memoContent", m.getMemoMessage());
             initialValues.put("priority", m.getPriority());
             initialValues.put("memoDate", m.getDateOfMemo());
 
 
             didSucceed = database.insert("memo", null, initialValues) > 0;
+
         }
         catch (Exception e) {
 
@@ -48,7 +51,7 @@ public class MemoDataSource {
     }
 
 
-
+    //not used
     public Memo getSpecificMemo(int memoId) {
         Memo memo = new Memo();
         String query = "SELECT  * FROM memo WHERE _id =" + memoId;
@@ -67,6 +70,7 @@ public class MemoDataSource {
         return memo;
     }
 
+    //not used
     public int getLastMemoId() {
         int lastId = -1;
         try {
@@ -100,7 +104,7 @@ public class MemoDataSource {
                 newMemo.setMemoID(cursor.getInt(0));
                 newMemo.setMemoMessage(cursor.getString(1));
                 newMemo.setPriority(cursor.getString(2));
-                newMemo.setDateOfMemo(cursor.getString(3)); //this date is not really working
+                newMemo.setDateOfMemo(cursor.getString(3)); //this date is not really working?
 ;
 
                 memos.add(newMemo);

@@ -1,6 +1,7 @@
 package com.example.memoapplication;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,14 +34,28 @@ public class MemoAdapter extends ArrayAdapter<Memo> {
                 v = vi.inflate(R.layout.list_item, null);
             }
 
+
+
             TextView memoMessage = (TextView) v.findViewById(R.id.textMemo);
             TextView priority = (TextView) v.findViewById(R.id.textPriority);
             TextView memoDate = (TextView) v.findViewById(R.id.textDate);
 
 
             memoMessage.setText(memo.getMemoMessage());
-            priority.setText(memo.getPriority());
-            memoDate.setText(memo.getDateOfMemo().toString()); //FIX ME
+            memoDate.setText(memo.getDateOfMemo());
+
+            if(memo.getPriority().equals("Low")) {
+                priority.setTextColor(Color.BLACK);
+                priority.setText(memo.getPriority());
+            }
+            if(memo.getPriority().equals("Medium")) {
+                priority.setTextColor(Color.BLUE);
+                priority.setText(memo.getPriority());
+            }
+            if(memo.getPriority().equals("High")) {
+                priority.setTextColor(Color.RED);
+                priority.setText(memo.getPriority());
+            }
 
             //if the position is an even number, then the contact name text will be red
 //            if(position % 2 == 0 ) {
@@ -52,7 +67,6 @@ public class MemoAdapter extends ArrayAdapter<Memo> {
 //            }
 
 
-
             Button b = (Button) v.findViewById(R.id.buttonDeleteMemo);
             b.setVisibility(View.INVISIBLE);
         }
@@ -62,6 +76,8 @@ public class MemoAdapter extends ArrayAdapter<Memo> {
         }
         return v;
     }
+
+
 
     public void showDelete(final int position, final View convertView, final Context context, final Memo memo) {
         View v = convertView;

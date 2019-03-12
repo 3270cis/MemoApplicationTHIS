@@ -21,7 +21,6 @@ public class Memo {
 
     public Memo(){
 
-
     }
 
     public Memo(String newMemoMessage, String newPriority) {

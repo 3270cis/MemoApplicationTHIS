@@ -43,8 +43,10 @@ public class MemoListActivity extends ListActivity {
             ds.open();
             memos = ds.getMemos(sortBy);  //, sortOrder);
             ds.close();
-            adapter = new MemoAdapter(this, memos);
+
+            adapter = new MemoAdapter(this,  memos);
             setListAdapter(adapter);
+
         } catch (Exception e) {
             Toast.makeText(this, "Error retrieving memos", Toast.LENGTH_LONG).show();
         }
@@ -56,10 +58,11 @@ public class MemoListActivity extends ListActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View itemClicked, int position, long id) {
                     Memo selectedMemo = memos.get(position);
+
                     if (isDeleting) {
                         adapter.showDelete(position, itemClicked, MemoListActivity.this, selectedMemo);
                     } else {
-                        Intent intent = new Intent(MemoListActivity.this, MemoActivity.class);
+                        Intent intent = new Intent(MemoListActivity.this, MemoActivity.class); //HERE!
                         intent.putExtra("memoid", selectedMemo.getMemoID());
                         startActivity(intent);
                     }

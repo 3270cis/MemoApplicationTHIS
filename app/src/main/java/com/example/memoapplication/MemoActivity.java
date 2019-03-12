@@ -23,35 +23,35 @@ public class MemoActivity extends AppCompatActivity {
         initViewListButton();
         //initMemoRadioSetting();
 
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            initMemo(extras.getInt("memoid"));
-        } else {
-            currentMemo = new Memo();
-        }
-    }
-
-    public void initMemo(int id) {
-
-
-        MemoDataSource ds = new MemoDataSource(MemoActivity.this);
-        try {
-            ds.open();
-            currentMemo = ds.getSpecificMemo(id);
-            ds.close();
-        } catch (Exception ex) {
-            Toast.makeText(this,"something went wrong in the initlize memo DB", Toast.LENGTH_LONG ).show();
-
-        }
-
-
-        EditText editMemoMessage = (EditText) findViewById(R.id.memoMessage);
-        editMemoMessage.setText(currentMemo.getMemoMessage());
-
-
-
+//        Bundle extras = getIntent().getExtras();
+//        if (extras != null) {
+//            initMemo(extras.getInt("memoid"));
+//        }
+//
+//        else {
+//            currentMemo = new Memo();
+//        }
 
     }
+
+//    public void initMemo(int id) {
+//
+//        MemoDataSource ds = new MemoDataSource(MemoActivity.this);
+//        try {
+//            ds.open();
+//            currentMemo = ds.getSpecificMemo(id);
+//            ds.close();
+//        } catch (Exception ex) {
+//            Toast.makeText(this,"something went wrong in the initlize memo DB", Toast.LENGTH_LONG ).show();
+//
+//        }
+//
+//
+////        EditText editMemoMessage = (EditText) findViewById(R.id.memoMessage);
+////        editMemoMessage.setText(currentMemo.getMemoMessage());
+//
+//
+//    }
 
     public void initViewListButton() {
 
@@ -140,9 +140,11 @@ public class MemoActivity extends AppCompatActivity {
                     ds.open();
                     ds.insertMemo(currentMemo);
                     ds.close();
+                    Toast.makeText(MemoActivity.this, "Entered into Memo!", Toast.LENGTH_LONG).show();
+
 
                 } catch (Exception ex) {
-                    Toast.makeText(MemoActivity.this, "something went wrong in the initlize memo DB", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MemoActivity.this, "something went wrong in the  memo DB", Toast.LENGTH_LONG).show();
 
                 }
 
