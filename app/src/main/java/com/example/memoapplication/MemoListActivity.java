@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -35,8 +36,8 @@ public class MemoListActivity extends ListActivity {
     @Override
     public void onResume() {
         super.onResume();
-        String sortBy = getSharedPreferences("MyContactListPreferences", Context.MODE_PRIVATE).getString("sortfield", "memoContent");
-        // String sortOrder = getSharedPreferences("MyContactListPreferences", Context.MODE_PRIVATE).getString("sortorder", "ASC");
+        String sortBy = getSharedPreferences("MyMemoListPreferences", Context.MODE_PRIVATE).getString("sortfield", "memoDate");
+        // String sortOrder = getSharedPreferences("MyMemoListPreferences", Context.MODE_PRIVATE).getString("sortorder", "ASC");
 
         MemoDataSource ds = new MemoDataSource(this);
         try {
@@ -52,7 +53,10 @@ public class MemoListActivity extends ListActivity {
         }
 
         if (memos.size() > 0) {
+
             ListView listView = getListView();
+
+
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                 @Override
@@ -62,7 +66,7 @@ public class MemoListActivity extends ListActivity {
                     if (isDeleting) {
                         adapter.showDelete(position, itemClicked, MemoListActivity.this, selectedMemo);
                     } else {
-                        Intent intent = new Intent(MemoListActivity.this, MemoActivity.class); //HERE!
+                        Intent intent = new Intent(MemoListActivity.this, MemoEditActivity.class); //HERE!
                         intent.putExtra("memoid", selectedMemo.getMemoID());
                         startActivity(intent);
                     }

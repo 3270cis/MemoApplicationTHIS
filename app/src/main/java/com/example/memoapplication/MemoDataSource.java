@@ -93,7 +93,7 @@ public class MemoDataSource {
     public ArrayList<Memo> getMemos(String sortField) {
         ArrayList<Memo> memos = new ArrayList<Memo>();
         try {
-            String query = "SELECT  * FROM memo ORDER BY " + sortField;
+            String query = "SELECT  * FROM memo ORDER BY " + sortField ;
 
             Cursor cursor = database.rawQuery(query, null);
 

@@ -17,7 +17,7 @@
         <TextView
             android:layout_width="234dp"
             android:layout_height="77dp"
-            android:text="My Memo"
+            android:text="Edit My Memo"
             android:textSize="36sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.107"
