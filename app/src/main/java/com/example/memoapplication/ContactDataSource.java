@@ -37,7 +37,7 @@ public class ContactDataSource  {
             initialValues.put("_id", m.getMemoID());
             initialValues.put("memoContent", m.getMemoMessage());
             initialValues.put("priority", m.getPriority());
-            initialValues.put("memoDate", String.valueOf(m.getDateOfMemo().getTimeInMillis()));
+            initialValues.put("memoDate", m.getDateOfMemo());
 
 
             didSucceed = database.insert("memo", null, initialValues) > 0;
