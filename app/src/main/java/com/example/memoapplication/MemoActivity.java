@@ -7,9 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 public class MemoActivity extends AppCompatActivity {
 
@@ -36,7 +34,7 @@ public class MemoActivity extends AppCompatActivity {
     public void initMemo(int id) {
 
 
-        ContactDataSource ds = new ContactDataSource(MemoActivity.this);
+        MemoDataSource ds = new MemoDataSource(MemoActivity.this);
         try {
             ds.open();
             currentMemo = ds.getSpecificMemo(id);
@@ -82,7 +80,7 @@ public class MemoActivity extends AppCompatActivity {
 //                boolean wasSuccessful = false;
 //
 //
-//                ContactDataSource ds = new ContactDataSource(MemoActivity.this);
+//                MemoDataSource ds = new MemoDataSource(MemoActivity.this);
 //
 //                try {
 //                    ds.open();
@@ -128,18 +126,14 @@ public class MemoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                currentMemo = new Memo();
 
-                //get the value from the getRadioValue method and pass the priority to the current memo
                 String radioValue = getRadioValue();
                 String memoMessage = getMemoMessage();
 
-                currentMemo.setPriority(radioValue);
-                currentMemo.setMemoMessage(memoMessage);
+                currentMemo = new Memo(memoMessage,radioValue);
 
 
-
-                ContactDataSource ds = new ContactDataSource(MemoActivity.this);
+                MemoDataSource ds = new MemoDataSource(MemoActivity.this);
 
                 //this inserts the current memo object into the database
                 try {

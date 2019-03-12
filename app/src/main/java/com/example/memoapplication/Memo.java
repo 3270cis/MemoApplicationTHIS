@@ -13,35 +13,30 @@ public class Memo {
     private int memoID;
     private String memoMessage;
     private String priority;
+
     Calendar calendar;
-
-
     String dateToStr;
 
 
 
     public Memo(){
 
-        memoID = 0;
-
-        calendar = Calendar.getInstance();
-
-        SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy hh:mm:ss a");
-
-        dateToStr = format.format(calendar.getTime());
-
-
 
     }
 
-    //MIGHT NOT NEED THIS CONSTRUCTOR
-//    public Memo(String newMemoMessage, String newPriority) {
-//
-//        this.memoMessage = newMemoMessage;
-//        this.priority = newPriority;
-//        dateOfMemo = new Date();
-//
-//    }
+    public Memo(String newMemoMessage, String newPriority) {
+
+        this.memoMessage = newMemoMessage;
+        this.priority = newPriority;
+
+        //memoID = 0;
+
+        calendar = Calendar.getInstance();
+        SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy hh:mm:ss a");
+        dateToStr = format.format(calendar.getTime());
+
+
+    }
 
     public int getMemoID() {
         return memoID;

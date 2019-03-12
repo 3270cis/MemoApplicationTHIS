@@ -4,21 +4,17 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.widget.Toast;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
 
-public class ContactDataSource  {
+public class MemoDataSource {
 
     private SQLiteDatabase database;
-    private ContactDBHelper dbHelper;
+    private MemoDBHelper dbHelper;
 
-    public ContactDataSource(Context context) {
-        dbHelper = new ContactDBHelper(context);
+    public MemoDataSource(Context context) {
+        dbHelper = new MemoDBHelper(context);
     }
 
     public void open() throws SQLException {

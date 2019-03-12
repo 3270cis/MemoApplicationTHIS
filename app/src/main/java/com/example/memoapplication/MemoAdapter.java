@@ -1,7 +1,6 @@
 package com.example.memoapplication;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,7 +84,7 @@ public class MemoAdapter extends ArrayAdapter<Memo> {
     }
 
     private void deleteOption(int memoToDelete, Context context) {
-        ContactDataSource db = new ContactDataSource(context);
+        MemoDataSource db = new MemoDataSource(context);
         try {
             db.open();
             db.deleteMemo(memoToDelete);

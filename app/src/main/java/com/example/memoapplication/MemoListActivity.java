@@ -4,7 +4,6 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -27,7 +26,7 @@ public class MemoListActivity extends ListActivity {
 
         initDeleteButton();
 
-//        ContactDataSource ds = new ContactDataSource(this);
+//        MemoDataSource ds = new MemoDataSource(this);
 //        ds.getSpecificMemo()
 
 
@@ -39,7 +38,7 @@ public class MemoListActivity extends ListActivity {
         String sortBy = getSharedPreferences("MyContactListPreferences", Context.MODE_PRIVATE).getString("sortfield", "memoContent");
         // String sortOrder = getSharedPreferences("MyContactListPreferences", Context.MODE_PRIVATE).getString("sortorder", "ASC");
 
-        ContactDataSource ds = new ContactDataSource(this);
+        MemoDataSource ds = new MemoDataSource(this);
         try {
             ds.open();
             memos = ds.getMemos(sortBy);  //, sortOrder);
