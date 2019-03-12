@@ -33,45 +33,48 @@ public class MemoListActivity extends ListActivity {
 
     }
 
-//    public void onResume() {
-//        super.onResume();
-//        String sortBy = getSharedPreferences("MyContactListPreferences", Context.MODE_PRIVATE).getString("sortfield", "memoContent");
-//        // String sortOrder = getSharedPreferences("MyContactListPreferences", Context.MODE_PRIVATE).getString("sortorder", "ASC");
-//
-//        ContactDataSource ds = new ContactDataSource(this);
-//        try {
-//            ds.open();
-//            memos = ds.getMemos(sortBy);  //, sortOrder);
-//            ds.close();
-//            adapter = new MemoAdapter(this, memos);
-//            setListAdapter(adapter);
-//        } catch (Exception e) {
-//            Toast.makeText(this, "Error retrieving contacts", Toast.LENGTH_LONG).show();
-//        }
-//
-//        if (memos.size() > 0) {
-//            ListView listView = getListView();
-//            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//
-//                @Override
-//                public void onItemClick(AdapterView<?> parent, View itemClicked, int position, long id) {
-//                    Memo selectedMemo = memos.get(position);
-//                    if (isDeleting) {
-//                        adapter.showDelete(position, itemClicked, MemoListActivity.this, selectedMemo);
-//                    } else {
-//                        Intent intent = new Intent(MemoListActivity.this, MemoActivity.class);
-//                        intent.putExtra("memoid", selectedMemo.getMemoID());
-//                        startActivity(intent);
-//                    }
-//                }
-//            });
-//        } else {
+    @Override
+    public void onResume() {
+        super.onResume();
+        String sortBy = getSharedPreferences("MyContactListPreferences", Context.MODE_PRIVATE).getString("sortfield", "memoContent");
+        // String sortOrder = getSharedPreferences("MyContactListPreferences", Context.MODE_PRIVATE).getString("sortorder", "ASC");
+
+        ContactDataSource ds = new ContactDataSource(this);
+        try {
+            ds.open();
+            memos = ds.getMemos(sortBy);  //, sortOrder);
+            ds.close();
+            adapter = new MemoAdapter(this, memos);
+            setListAdapter(adapter);
+        } catch (Exception e) {
+            Toast.makeText(this, "Error retrieving contacts", Toast.LENGTH_LONG).show();
+        }
+
+        if (memos.size() > 0) {
+            ListView listView = getListView();
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                @Override
+                public void onItemClick(AdapterView<?> parent, View itemClicked, int position, long id) {
+                    Memo selectedMemo = memos.get(position);
+                    if (isDeleting) {
+                        adapter.showDelete(position, itemClicked, MemoListActivity.this, selectedMemo);
+                    } else {
+                        Intent intent = new Intent(MemoListActivity.this, MemoActivity.class);
+                        intent.putExtra("memoid", selectedMemo.getMemoID());
+                        startActivity(intent);
+                    }
+                }
+            });
+        }
+
+//        else {
 //            Intent intent = new Intent(MemoListActivity.this, MemoActivity.class);
 //            startActivity(intent);
 //        }
-//
-//
-//    }
+
+
+    }
 
     private void initDeleteButton() {
         final Button deleteButton = (Button) findViewById(R.id.buttonDelete);

@@ -14,6 +14,7 @@ public class MemoActivity extends AppCompatActivity {
 
 
     private Memo currentMemo;
+    RadioButton radioButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +22,7 @@ public class MemoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initSaveButton();
         initViewListButton();
+        //initMemoRadioSetting();
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -31,6 +33,9 @@ public class MemoActivity extends AppCompatActivity {
     }
 
     public void initMemo(int id) {
+
+
+
         ContactDataSource ds = new ContactDataSource(MemoActivity.this);
         try {
             ds.open();
@@ -41,9 +46,10 @@ public class MemoActivity extends AppCompatActivity {
 
         }
 
-        EditText editMemoMessage = (EditText) findViewById(R.id.memo);
 
+        EditText editMemoMessage = (EditText) findViewById(R.id.memoMessage);
         editMemoMessage.setText(currentMemo.getMemoMessage());
+
 
 
 
@@ -66,65 +72,104 @@ public class MemoActivity extends AppCompatActivity {
 
     }
 
-    public void initSaveButton(){
+    public void initSaveButton() {
 
-        Button saveButton =  (Button) findViewById(R.id.saveButton);
+        Button saveButton = (Button) findViewById(R.id.saveButton);
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                //get the value from the getRadioValue method and pass the priority to the current memo
+                String radioValue = getRadioValue();
+                String memoMessage = getMemoMessage();
 
-                final RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
-                radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-
-                    @Override
-                    public void onCheckedChanged(RadioGroup group, int checkedId) {
-
-                        RadioButton radioButton;
-
-                        RadioButton radioButtonLow = (RadioButton) findViewById(R.id.low);
-                        RadioButton radioButtonMedium = (RadioButton) findViewById(R.id.medium);
-                        RadioButton radioButtonHigh = (RadioButton) findViewById(R.id.high);
+                currentMemo.setPriority(radioValue);
+                currentMemo.setMemoMessage(memoMessage);
 
 
-                        //the defualt is low if the users doesnt specificy the priortty.
-                        int priority = radioGroup.getCheckedRadioButtonId();
 
-                        if(radioButtonLow.isChecked()) {
-                            radioButton = (RadioButton) findViewById(priority);
-                            currentMemo.setPriority(radioButton.toString());
-                        }
+                ContactDataSource ds = new ContactDataSource(MemoActivity.this);
 
-                        else if (radioButtonMedium.isChecked()) {
-                            radioButton = (RadioButton) findViewById(priority);
-                            currentMemo.setPriority(radioButton.toString());
-                        }
+                //this inserts the current memo object into the database
+                try {
+                    ds.open();
+                    ds.insertMemo(currentMemo);
+                    ds.close();
 
-                        else if (radioButtonHigh.isChecked()) {
-                            radioButton = (RadioButton) findViewById(priority);
-                            currentMemo.setPriority(radioButton.toString());
-                        }
+                } catch (Exception ex) {
+                    Toast.makeText(MemoActivity.this, "something went wrong in the initlize memo DB", Toast.LENGTH_LONG).show();
 
-                        ContactDataSource ds = new ContactDataSource(MemoActivity.this);
-
-                        try {
-                            ds.open();
-                            ds.insertMemo(currentMemo);
-                            ds.close();
-
-                        } catch (Exception ex) {
-                            Toast.makeText(MemoActivity.this,"something went wrong in the initlize memo DB", Toast.LENGTH_LONG ).show();
-
-                        }
-
-
-                    }
-                });
+                }
 
 
             }
         });
+
+    }
+
+    public String getMemoMessage() {
+
+        EditText memoMessage = (EditText) findViewById(R.id.memoMessage);
+
+        return memoMessage.toString();
+
+    }
+
+    public String getRadioValue() {
+
+        // RadioButton radioButtonLow=(RadioButton)findViewById(R.id.low);
+        RadioButton radioButtonMedium=(RadioButton)findViewById(R.id.medium);
+        RadioButton radioButtonHigh=(RadioButton)findViewById(R.id.high);
+
+
+
+        if(radioButtonMedium.isChecked()){
+            return "Medium";
+        }
+
+        else if(radioButtonHigh.isChecked()){
+            return "High";
+
+        }
+
+        //the default return is Low, even if the user doesn't even specify the priority
+        else {
+            return "Low";
+        }
+
+    }
+
+
+    //i dont think we need this
+
+//    public void initMemoRadioSetting() {
+//
+//        RadioButton radioButtonLow=(RadioButton)findViewById(R.id.low);
+//        RadioButton radioButtonMedium=(RadioButton)findViewById(R.id.medium);
+//        RadioButton radioButtonHigh=(RadioButton)findViewById(R.id.high);
+//
+//        final RadioGroup radioGroup=(RadioGroup)findViewById(R.id.radioGroup);
+//
+//        int priority=radioGroup.getCheckedRadioButtonId();
+//
+//
+//        if(radioButtonLow.isChecked()){
+//            radioButton=(RadioButton)findViewById(priority);
+//            currentMemo.setPriority(radioButton.toString());
+//        }
+//
+//        else if(radioButtonMedium.isChecked()){
+//            radioButton=(RadioButton)findViewById(priority);
+//            currentMemo.setPriority(radioButton.toString());
+//        }
+//
+//        else if(radioButtonHigh.isChecked()){
+//            radioButton=(RadioButton)findViewById(priority);
+//            currentMemo.setPriority(radioButton.toString());
+//        }
+//
+//        }
 
 
 
@@ -135,5 +180,3 @@ public class MemoActivity extends AppCompatActivity {
 
 
 
-
-}
