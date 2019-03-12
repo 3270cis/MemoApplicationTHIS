@@ -118,6 +118,39 @@ public class MemoDataSource {
         return memos;
     }
 
+    public ArrayList<Memo> getMemosByPriority(String sortField) {
+        ArrayList<Memo> memos = new ArrayList<Memo>();
+        try {
+            String query = "SELECT  * FROM memo ORDER BY CASE " + sortField +
+                    "    WHEN 'High' THEN 1\n" +
+                    "    WHEN 'Medium' THEN 2\n" +
+                    "    WHEN 'Low' THEN 3\n" +
+                    "    END ";
+
+            Cursor cursor = database.rawQuery(query, null);
+
+            Memo newMemo;
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                newMemo = new Memo();                                          //1
+                newMemo.setMemoID(cursor.getInt(0));
+                newMemo.setMemoMessage(cursor.getString(1));
+                newMemo.setPriority(cursor.getString(2));
+                newMemo.setDateOfMemo(cursor.getString(3)); //this date is not really working?
+                ;
+
+                memos.add(newMemo);
+                cursor.moveToNext();
+            }
+            cursor.close();
+        }
+        catch (Exception e) {
+            memos = new ArrayList<Memo>();
+        }
+        return memos;
+    }
+
+
 
     public boolean deleteMemo(int MemoId) {
         boolean didDelete = false;

@@ -26,6 +26,7 @@ public class MemoListActivity extends ListActivity {
         setContentView(R.layout.activity_memo_list);
 
         initDeleteButton();
+        initSortByPriorityButton();
 
 //        MemoDataSource ds = new MemoDataSource(this);
 //        ds.getSpecificMemo()
@@ -35,7 +36,7 @@ public class MemoListActivity extends ListActivity {
 
     @Override
     public void onResume() {
-        super.onResume();
+        super.onResume();                                                                                   //the list will displays newest memos on top
         String sortBy = getSharedPreferences("MyMemoListPreferences", Context.MODE_PRIVATE).getString("sortfield", "memoDate DESC");
         // String sortOrder = getSharedPreferences("MyMemoListPreferences", Context.MODE_PRIVATE).getString("sortorder", "ASC");
 
@@ -66,7 +67,7 @@ public class MemoListActivity extends ListActivity {
                     if (isDeleting) {
                         adapter.showDelete(position, itemClicked, MemoListActivity.this, selectedMemo);
                     } else {
-                        Intent intent = new Intent(MemoListActivity.this, MemoEditActivity.class); //HERE!
+                        Intent intent = new Intent(MemoListActivity.this, MemoEditActivity.class);
                         intent.putExtra("memoid", selectedMemo.getMemoID());
                         startActivity(intent);
                     }
@@ -95,6 +96,32 @@ public class MemoListActivity extends ListActivity {
                     deleteButton.setText("Done Deleting");
                     isDeleting = true;
                 }
+            }
+        });
+    }
+
+    public void initSortByPriorityButton() {
+        Button priorityButton = (Button) findViewById(R.id.priorityButton);
+        priorityButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String sortBy = getSharedPreferences("MyMemoListPreferences", Context.MODE_PRIVATE).getString("sortfield", "priority");
+
+
+                MemoDataSource ds = new MemoDataSource(MemoListActivity.this);
+                try {
+                    ds.open();
+                    memos = ds.getMemosByPriority(sortBy);
+                    ds.close();
+
+                    adapter = new MemoAdapter(MemoListActivity.this,  memos);
+                    setListAdapter(adapter);
+
+                } catch (Exception e) {
+                    Toast.makeText(MemoListActivity.this, "Error sorting by priority", Toast.LENGTH_LONG).show();
+                }
+
             }
         });
     }
