@@ -132,6 +132,7 @@ public class MemoActivity extends AppCompatActivity {
 
                 currentMemo = new Memo(memoMessage,radioValue);
 
+                //comment
 
                 MemoDataSource ds = new MemoDataSource(MemoActivity.this);
 
