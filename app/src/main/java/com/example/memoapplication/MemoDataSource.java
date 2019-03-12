@@ -132,11 +132,11 @@ public class MemoDataSource {
             Memo newMemo;
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
-                newMemo = new Memo();                                          //1
+                newMemo = new Memo();
                 newMemo.setMemoID(cursor.getInt(0));
                 newMemo.setMemoMessage(cursor.getString(1));
                 newMemo.setPriority(cursor.getString(2));
-                newMemo.setDateOfMemo(cursor.getString(3)); //this date is not really working?
+                newMemo.setDateOfMemo(cursor.getString(3));
                 ;
 
                 memos.add(newMemo);
@@ -151,7 +151,7 @@ public class MemoDataSource {
     }
 
 
-//comment
+
     public boolean deleteMemo(int MemoId) {
         boolean didDelete = false;
         try {
