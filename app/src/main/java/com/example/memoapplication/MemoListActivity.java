@@ -36,7 +36,7 @@ public class MemoListActivity extends ListActivity {
     @Override
     public void onResume() {
         super.onResume();
-        String sortBy = getSharedPreferences("MyMemoListPreferences", Context.MODE_PRIVATE).getString("sortfield", "memoDate");
+        String sortBy = getSharedPreferences("MyMemoListPreferences", Context.MODE_PRIVATE).getString("sortfield", "memoDate DESC");
         // String sortOrder = getSharedPreferences("MyMemoListPreferences", Context.MODE_PRIVATE).getString("sortorder", "ASC");
 
         MemoDataSource ds = new MemoDataSource(this);
