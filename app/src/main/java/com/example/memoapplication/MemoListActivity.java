@@ -32,6 +32,7 @@ public class MemoListActivity extends ListActivity {
 
         initDeleteButton();
         initSortByPriorityButton();
+        initSortByDateButton();
 
 
         String sortBy = getSharedPreferences("MyMemoListPreferences", Context.MODE_PRIVATE).getString("sortfield", "memoDate DESC");
@@ -85,7 +86,7 @@ public class MemoListActivity extends ListActivity {
 
 
     }
-    //THE ON_RESUME METHOD WAS RESETTING THE LIST EVERYTIME YOU TABBED OUT OF THE APP, SO I PUT IT IN THE ON CREATE -KELLY
+    //THE ON_RESUME METHOD WAS RESETTING THE LIST EVERYTIME YOU TABBED OUT OF THE APP, SO I PUT THE CODE IN ON_CREATE -KELLY
 //    @Override
 //    public void onResume() {
 //        super.onResume();                                                                                   //the list will displays newest memos on top
@@ -186,5 +187,55 @@ public class MemoListActivity extends ListActivity {
             }
         });
     }
+
+    public void initSortByDateButton(){
+
+        final Button sortDateButton = (Button) findViewById(R.id.dateButton);
+        sortDateButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                String sortBy = getSharedPreferences("MyMemoListPreferences", Context.MODE_PRIVATE).getString("sortfield", "memoDate DESC");
+                // String sortOrder = getSharedPreferences("MyMemoListPreferences", Context.MODE_PRIVATE).getString("sortorder", "ASC");
+
+                MemoDataSource ds = new MemoDataSource(MemoListActivity.this);
+                try {
+
+                    ds.open();
+                    memos = ds.getMemos(sortBy); //, sortOrder);
+                    ds.close();
+
+                    adapter = new MemoAdapter(MemoListActivity.this, memos);
+                    setListAdapter(adapter);
+                } catch (Exception e) {
+                    Toast.makeText(MemoListActivity.this, "Error retrieving memos", Toast.LENGTH_LONG).show();
+                }
+
+
+//                if (memos.size() > 0) {
+//
+//                    ListView listView = getListView();
+//                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//
+//                        @Override
+//                        public void onItemClick(AdapterView<?> parent, View itemClicked, int position, long id) {
+//                            Memo selectedMemo = memos.get(position);
+//
+//                            if (isDeleting) {
+//                                adapter.showDelete(position, itemClicked, MemoListActivity.this, selectedMemo);
+//                            } else {
+//                                Intent intent = new Intent(MemoListActivity.this, MemoEditActivity.class);
+//                                intent.putExtra("memoid", selectedMemo.getMemoID());
+//                                startActivity(intent);
+//                            }
+//                        }
+//                    });
+//                }
+            }
+        });
+    }
+
+
+
+
 
 }

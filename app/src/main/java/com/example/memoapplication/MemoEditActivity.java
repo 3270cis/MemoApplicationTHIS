@@ -27,15 +27,28 @@ public class MemoEditActivity extends AppCompatActivity {
         String memoMessage = intent.getStringExtra("memo");
         String priority = intent.getStringExtra("priority");
 
-        //this puts the memo message on the box so the user can edit it
+        //this automatically sets the memo message on the box so the user can edit it
         EditText theMemoMessage = (EditText) findViewById(R.id.memoMessageEdit);
         theMemoMessage.setText(memoMessage);
         theMemoMessage.setEnabled(true);
 
+        //this automatically sets the priority of the memo
+        RadioButton radioButtonLow=(RadioButton)findViewById(R.id.lowEdit);
+        RadioButton radioButtonMedium=(RadioButton)findViewById(R.id.mediumEdit);
+        RadioButton radioButtonHigh=(RadioButton)findViewById(R.id.highEdit);
 
-        //FIX ME!!!!
-        RadioGroup theRadioPriority = (RadioGroup) findViewById(R.id.radioGroupEdit);
-        //theRadioPriority.
+        if(priority.equals("Low")){
+            radioButtonLow.setChecked(true);
+        }
+
+        else if(priority.equals("Medium")) {
+            radioButtonMedium.setChecked(true);
+        }
+
+        else if(priority.equals("High")){
+            radioButtonHigh.setChecked(true);
+        }
+
 
 
         //initMemoRadioSetting();

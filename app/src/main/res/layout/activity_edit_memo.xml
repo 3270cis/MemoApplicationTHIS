@@ -9,39 +9,48 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorForEditMemoActivity"
+        android:background="@color/colorPrimary"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="149dp"
-        tools:layout_editor_absoluteY="0dp">
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="37dp">
 
         <TextView
-            android:layout_width="234dp"
+            android:layout_width="match_parent"
             android:layout_height="77dp"
-            android:text="Edit My Memo"
+            android:fontFamily="casual"
+            android:text="Edit My Memo "
+            android:textAlignment="center"
+            android:textColor="#800000"
             android:textSize="36sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.107"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.035" />
+            android:textStyle="bold"  />
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--app:layout_constraintHorizontal_bias="0.107"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--app:layout_constraintRight_toRightOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent"-->
+        <!--app:layout_constraintVertical_bias="0.035" />-->
 
         <EditText
             android:id="@+id/memoMessageEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:fontFamily="casual"
             android:gravity="top"
+            android:hint="Enter Memo Here"
             android:inputType="textAutoCorrect|textMultiLine"
             android:lines="8"
             android:maxLines="10"
             android:scrollbars="vertical"
-            android:hint="Enter Memo Here" />
+            android:textColor="#800000"
+            android:textStyle="bold" />
 
         <RadioGroup
             android:id="@+id/radioGroupEdit"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            >
+
 
             <RadioButton
                 android:id="@+id/lowEdit"
@@ -65,18 +74,117 @@
                 android:text="High" />
         </RadioGroup>
 
+
         <Button
             android:id="@+id/saveButtonEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Save" />
+            android:background="@drawable/mybutton"
+            android:text="Save"
+            android:textSize="17dp"
+            android:padding="19dp"
+            android:textColor="#ffffff"
+
+            />
 
         <Button
             android:id="@+id/viewMemoButtonEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="VIEW MEMOS" />
+            android:padding="19dp"
+            android:textSize="17dp"
+            android:text="VIEW MEMOS"
+            android:textColor="#ffffff"
+            android:background="@drawable/mybutton"
+            />
+
+
 
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
+
+
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--xmlns:tools="http://schemas.android.com/tools"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--tools:context=".MemoActivity">-->
+
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:background="@color/colorForEditMemoActivity"-->
+        <!--android:orientation="vertical"-->
+        <!--tools:layout_editor_absoluteX="149dp"-->
+        <!--tools:layout_editor_absoluteY="0dp">-->
+
+        <!--<TextView-->
+            <!--android:layout_width="234dp"-->
+            <!--android:layout_height="77dp"-->
+            <!--android:text="Edit My Memo"-->
+            <!--android:textSize="36sp"-->
+            <!--app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--app:layout_constraintHorizontal_bias="0.107"-->
+            <!--app:layout_constraintLeft_toLeftOf="parent"-->
+            <!--app:layout_constraintRight_toRightOf="parent"-->
+            <!--app:layout_constraintTop_toTopOf="parent"-->
+            <!--app:layout_constraintVertical_bias="0.035" />-->
+
+        <!--<EditText-->
+            <!--android:id="@+id/memoMessageEdit"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:ems="10"-->
+            <!--android:gravity="top"-->
+            <!--android:inputType="textAutoCorrect|textMultiLine"-->
+            <!--android:lines="8"-->
+            <!--android:maxLines="10"-->
+            <!--android:scrollbars="vertical"-->
+            <!--android:hint="Enter Memo Here" />-->
+
+        <!--<RadioGroup-->
+            <!--android:id="@+id/radioGroupEdit"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content">-->
+
+            <!--<RadioButton-->
+                <!--android:id="@+id/lowEdit"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1"-->
+                <!--android:text="Low" />-->
+
+            <!--<RadioButton-->
+                <!--android:id="@+id/mediumEdit"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1"-->
+                <!--android:text="Medium" />-->
+
+            <!--<RadioButton-->
+                <!--android:id="@+id/highEdit"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1"-->
+                <!--android:text="High" />-->
+        <!--</RadioGroup>-->
+
+        <!--<Button-->
+            <!--android:id="@+id/saveButtonEdit"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Save" />-->
+
+        <!--<Button-->
+            <!--android:id="@+id/viewMemoButtonEdit"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="VIEW MEMOS" />-->
+
+    <!--</LinearLayout>-->
+
+<!--</android.support.constraint.ConstraintLayout>-->
