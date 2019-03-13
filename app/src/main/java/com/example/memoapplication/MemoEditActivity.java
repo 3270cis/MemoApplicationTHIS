@@ -15,6 +15,18 @@ public class MemoEditActivity extends AppCompatActivity {
 
     private Memo currentMemo;
 
+    String memoMessage;
+    String priority;
+    int currentMemoId;
+
+
+    EditText theMemoMessage;
+    RadioButton radioButtonLow;
+    RadioButton radioButtonMedium;
+    RadioButton radioButtonHigh;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,20 +34,21 @@ public class MemoEditActivity extends AppCompatActivity {
         initSaveButton();
         initViewListButton();
 
-        //this gets the memo and priority that the user selected from MemoListActivity
+        //this gets the memo and priority that the user selected from MemoListActivity, also gets the memoId.
         Intent intent = getIntent();
-        String memoMessage = intent.getStringExtra("memo");
-        String priority = intent.getStringExtra("priority");
+        memoMessage = intent.getStringExtra("memo");
+        priority = intent.getStringExtra("priority");
+        currentMemoId = intent.getIntExtra("memoId",-1);
 
         //this automatically sets the memo message on the box so the user can edit it
-        EditText theMemoMessage = (EditText) findViewById(R.id.memoMessageEdit);
+        theMemoMessage = (EditText) findViewById(R.id.memoMessageEdit);
         theMemoMessage.setText(memoMessage);
         theMemoMessage.setEnabled(true);
 
         //this automatically sets the priority of the memo
-        RadioButton radioButtonLow=(RadioButton)findViewById(R.id.lowEdit);
-        RadioButton radioButtonMedium=(RadioButton)findViewById(R.id.mediumEdit);
-        RadioButton radioButtonHigh=(RadioButton)findViewById(R.id.highEdit);
+        radioButtonLow=(RadioButton)findViewById(R.id.lowEdit);
+        radioButtonMedium=(RadioButton)findViewById(R.id.mediumEdit);
+        radioButtonHigh=(RadioButton)findViewById(R.id.highEdit);
 
         if(priority.equals("Low")){
             radioButtonLow.setChecked(true);
@@ -48,6 +61,7 @@ public class MemoEditActivity extends AppCompatActivity {
         else if(priority.equals("High")){
             radioButtonHigh.setChecked(true);
         }
+
 
 
 
@@ -66,11 +80,11 @@ public class MemoEditActivity extends AppCompatActivity {
 
 //    public void initMemo(String id) {
 //
-//        MemoDataSource ds = new MemoDataSource(MemoEditActivity.this);
+//        MemoDataSource dataSource = new MemoDataSource(MemoEditActivity.this);
 //        try {
-//            ds.open();
-//            currentMemo = ds.getSpecificMemo(id);
-//            ds.close();
+//            dataSource.open();
+//            currentMemo = dataSource.getSpecificMemo(id);
+//            dataSource.close();
 //        } catch (Exception ex) {
 //            Toast.makeText(this,"something went wrong in the initlize memo DB", Toast.LENGTH_LONG ).show();
 //
@@ -100,7 +114,6 @@ public class MemoEditActivity extends AppCompatActivity {
 
     }
 
-    //FIX US
     public void initSaveButton() {
 
         Button saveButton = (Button) findViewById(R.id.saveButtonEdit);
@@ -110,28 +123,35 @@ public class MemoEditActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                String radioValue = getRadioValue();
-                String memoMessage = getMemoMessage();
+                String radioValueEdit = getRadioValue();
+                String memoMessageEdit = getMemoMessage();
 
-                currentMemo = new Memo(memoMessage,radioValue);
+                //if the user edits the memo or the priority, then it will update in the DB
+                if(!memoMessageEdit.equals(memoMessage) | !radioValueEdit.equals(priority)) {
 
-                //comment
+                    currentMemo = new Memo(memoMessageEdit, radioValueEdit);
 
-                MemoDataSource ds = new MemoDataSource(MemoEditActivity.this);
+                    //comment
 
-                //this inserts the current memo object into the database
-                try {
-                    ds.open();
-                    ds.insertMemo(currentMemo);
-                    ds.close();
-                    Toast.makeText(MemoEditActivity.this, "Updated into Memo!", Toast.LENGTH_LONG).show();
+                    MemoDataSource ds = new MemoDataSource(MemoEditActivity.this);
+
+                    //this inserts the current memo object into the database
+                    try {
+                        ds.open();
+                        ds.updateMemo(currentMemoId, currentMemo);
+                        ds.close();
+                        Toast.makeText(MemoEditActivity.this, "Updated into Memo!", Toast.LENGTH_LONG).show();
 
 
-                } catch (Exception ex) {
-                    Toast.makeText(MemoEditActivity.this, "something went wrong in the  memo DB", Toast.LENGTH_LONG).show();
+                    } catch (Exception ex) {
+                        Toast.makeText(MemoEditActivity.this, "something went wrong in the  memo DB", Toast.LENGTH_LONG).show();
 
+                    }
                 }
 
+                else {
+                    Toast.makeText(MemoEditActivity.this,"no update :)", Toast.LENGTH_LONG).show();
+                }
 
             }
         });
@@ -184,10 +204,10 @@ public class MemoEditActivity extends AppCompatActivity {
 //                boolean wasSuccessful = false;
 //
 //
-//                MemoDataSource ds = new MemoDataSource(MemoActivity.this);
+//                MemoDataSource dataSource = new MemoDataSource(MemoActivity.this);
 //
 //                try {
-//                    ds.open();
+//                    dataSource.open();
 //
 //                    if (currentMemo.getMemoID() == -1) {
 //
@@ -198,15 +218,15 @@ public class MemoEditActivity extends AppCompatActivity {
 //                        currentMemo.setPriority(radioValue);
 //                        currentMemo.setMemoMessage(memoMessage);
 //
-//                        wasSuccessful = ds.insertMemo(currentMemo);
-//                        int newId = ds.getLastMemoId();
+//                        wasSuccessful = dataSource.insertMemo(currentMemo);
+//                        int newId = dataSource.getLastMemoId();
 //                        currentMemo.setMemoID(newId);
 //
 //
 //                    } else {
-//                        //wasSuccessful = ds.updateContact(currentContact);
+//                        //wasSuccessful = dataSource.updateContact(currentContact);
 //                    }
-//                    ds.close();
+//                    dataSource.close();
 //                } catch (Exception e) {
 //                    wasSuccessful = false;
 //                    Toast.makeText(MemoActivity.this, "something went wrong in the initlize memo DB", Toast.LENGTH_LONG).show();

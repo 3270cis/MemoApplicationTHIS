@@ -35,11 +35,11 @@ public class MemoActivity extends AppCompatActivity {
 
 //    public void initMemo(String id) {
 //
-//        MemoDataSource ds = new MemoDataSource(MemoActivity.this);
+//        MemoDataSource dataSource = new MemoDataSource(MemoActivity.this);
 //        try {
-//            ds.open();
-//            currentMemo = ds.getSpecificMemo(id);
-//            ds.close();
+//            dataSource.open();
+//            currentMemo = dataSource.getSpecificMemo(id);
+//            dataSource.close();
 //        } catch (Exception ex) {
 //            Toast.makeText(this,"something went wrong in the initlize memo DB", Toast.LENGTH_LONG ).show();
 //
@@ -79,10 +79,10 @@ public class MemoActivity extends AppCompatActivity {
 //                boolean wasSuccessful = false;
 //
 //
-//                MemoDataSource ds = new MemoDataSource(MemoActivity.this);
+//                MemoDataSource dataSource = new MemoDataSource(MemoActivity.this);
 //
 //                try {
-//                    ds.open();
+//                    dataSource.open();
 //
 //                    if (currentMemo.getMemoID() == -1) {
 //
@@ -93,15 +93,15 @@ public class MemoActivity extends AppCompatActivity {
 //                        currentMemo.setPriority(radioValue);
 //                        currentMemo.setMemoMessage(memoMessage);
 //
-//                        wasSuccessful = ds.insertMemo(currentMemo);
-//                        int newId = ds.getLastMemoId();
+//                        wasSuccessful = dataSource.insertMemo(currentMemo);
+//                        int newId = dataSource.getLastMemoId();
 //                        currentMemo.setMemoID(newId);
 //
 //
 //                    } else {
-//                        //wasSuccessful = ds.updateContact(currentContact);
+//                        //wasSuccessful = dataSource.updateContact(currentContact);
 //                    }
-//                    ds.close();
+//                    dataSource.close();
 //                } catch (Exception e) {
 //                    wasSuccessful = false;
 //                    Toast.makeText(MemoActivity.this, "something went wrong in the initlize memo DB", Toast.LENGTH_LONG).show();

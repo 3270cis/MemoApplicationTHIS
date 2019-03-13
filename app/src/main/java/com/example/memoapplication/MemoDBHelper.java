@@ -11,7 +11,7 @@ public class MemoDBHelper extends SQLiteOpenHelper {
 
     // Database creation sql statement
     private static final String CREATE_TABLE_MEMO =
-            "create table memo (_id integer, "
+            "create table memo (_id integer primary key, "
                     + "memoContent text, "
                     + "priority text, "
                     + "memoDate date);";

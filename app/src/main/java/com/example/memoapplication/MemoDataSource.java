@@ -3,6 +3,7 @@ package com.example.memoapplication;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
@@ -13,6 +14,11 @@ public class MemoDataSource {
 
     private SQLiteDatabase database;
     private MemoDBHelper dbHelper;
+
+    private static final String DATABASE_NAME = "mymemo.db";
+    private static final String DATABASE_TABLE_NAME = "memo";
+
+
 
     public MemoDataSource(Context context) {
         dbHelper = new MemoDBHelper(context);
@@ -50,6 +56,25 @@ public class MemoDataSource {
         return didSucceed;
     }
 
+    public boolean updateMemo(int memoId, Memo m) {
+        boolean didSucceedUpdate = false;
+
+        try {
+            ContentValues updateValues = new ContentValues();
+
+            updateValues.put("memoContent",m.getMemoMessage());
+            updateValues.put("priority", m.getPriority());
+            updateValues.put("memoDate", m.getDateOfMemo());
+
+            didSucceedUpdate = database.update("memo", updateValues, "_id=" + memoId, null) > 0;
+
+        }catch (Exception ex){
+            //will return false if it didn't work
+        }
+
+        return didSucceedUpdate;
+    }
+
 
     //not used
     public Memo getSpecificMemo(int memoId) {
@@ -85,6 +110,31 @@ public class MemoDataSource {
             lastId = -1;
         }
         return lastId;
+    }
+
+    public String getCurrentMemoIdInDB(String memoMessage, String priority, String memoDate) {
+        String currentMemoIdInDB = "";
+        try{
+//            String query = "SELECT priority FROM memo WHERE memoContent =" + memoMessage;
+//            Cursor cursor = database.rawQuery(query, null);
+
+            String columnPrioirty = "priority";
+            String columnMemoContent = "memoContent";
+
+            String result = DatabaseUtils.stringForQuery(database,
+                    "SELECT priority FROM " + DATABASE_TABLE_NAME +" WHERE memoContent ='"  + memoMessage + "' " , null);
+            currentMemoIdInDB = result;
+//            cursor.moveToPosition(2);
+//            currentMemoIdInDB = cursor.getString(1);
+//            cursor.close();
+
+        }catch(Exception ex) {
+
+            currentMemoIdInDB = "null";
+
+        }
+
+        return currentMemoIdInDB;
     }
 
 

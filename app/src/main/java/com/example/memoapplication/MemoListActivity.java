@@ -4,10 +4,8 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -18,6 +16,8 @@ public class MemoListActivity extends ListActivity {
 
     ArrayList<Memo> memos;
     boolean isDeleting = false;
+    MemoDataSource dataSource;
+
 
     private static final String STATE_LIST = "State Adapter Data";
 
@@ -38,12 +38,13 @@ public class MemoListActivity extends ListActivity {
         String sortBy = getSharedPreferences("MyMemoListPreferences", Context.MODE_PRIVATE).getString("sortfield", "memoDate DESC");
         // String sortOrder = getSharedPreferences("MyMemoListPreferences", Context.MODE_PRIVATE).getString("sortorder", "ASC");
 
-        MemoDataSource ds = new MemoDataSource(this);
+         dataSource = new MemoDataSource(this);
+
         try {
 
-            ds.open();
-            memos = ds.getMemos(sortBy);  //, sortOrder);
-            ds.close();
+            dataSource.open();
+            memos = dataSource.getMemos(sortBy);  //, sortOrder);
+            dataSource.close();
 
             adapter = new MemoAdapter(this, memos);
             setListAdapter(adapter);
@@ -63,12 +64,34 @@ public class MemoListActivity extends ListActivity {
                 public void onItemClick(AdapterView<?> parent, View itemClicked, int position, long id) {
                     Memo selectedMemo = memos.get(position);
 
+                    //final int currentMemoId =  dataSource.getCurrentMemoIdInDB(selectedMemo.getMemoMessage(), selectedMemo.getPriority(), selectedMemo.getDateOfMemo());
+
+
+                    //debugging purposes
+                    //String currentMemoIdToString = Integer.toString(currentMemoId);
+
                     if (isDeleting) {
                         adapter.showDelete(position, itemClicked, MemoListActivity.this, selectedMemo);
                     } else {
+
                         Intent intent = new Intent(MemoListActivity.this, MemoEditActivity.class);
                         intent.putExtra("memo", selectedMemo.getMemoMessage());
                         intent.putExtra("priority", selectedMemo.getPriority());
+                        //intent.putExtra("memoId", currentMemoId);
+
+                        try {
+                            dataSource.open();
+                            final String currentMemoIdSTRING =  dataSource.getCurrentMemoIdInDB(selectedMemo.getMemoMessage(), selectedMemo.getPriority(), selectedMemo.getDateOfMemo());
+
+                            //debugging purposes
+                            Toast.makeText(MemoListActivity.this,currentMemoIdSTRING , Toast.LENGTH_LONG).show();
+
+                            dataSource.close();
+                        }catch (Exception ex) {
+                            Toast.makeText(MemoListActivity.this,"DB Problem in List", Toast.LENGTH_LONG).show();
+                        }
+
+
                         startActivity(intent);
 
                        // MemoEditActivity memoEditActivity = new MemoEditActivity(); //Maybe send the memo message and radio through here if can't figure it out
@@ -81,8 +104,8 @@ public class MemoListActivity extends ListActivity {
 
 
 
-//        MemoDataSource ds = new MemoDataSource(this);
-//        ds.getSpecificMemo()
+//        MemoDataSource dataSource = new MemoDataSource(this);
+//        dataSource.getSpecificMemo()
 
 
     }
@@ -93,12 +116,12 @@ public class MemoListActivity extends ListActivity {
 //        String sortBy = getSharedPreferences("MyMemoListPreferences", Context.MODE_PRIVATE).getString("sortfield", "memoDate DESC");
 //        // String sortOrder = getSharedPreferences("MyMemoListPreferences", Context.MODE_PRIVATE).getString("sortorder", "ASC");
 //
-//        MemoDataSource ds = new MemoDataSource(this);
+//        MemoDataSource dataSource = new MemoDataSource(this);
 //        try {
 //
-//            ds.open();
-//            memos = ds.getMemos(sortBy);  //, sortOrder);
-//            ds.close();
+//            dataSource.open();
+//            memos = dataSource.getMemos(sortBy);  //, sortOrder);
+//            dataSource.close();
 //
 //            adapter = new MemoAdapter(this, memos);
 //            setListAdapter(adapter);
