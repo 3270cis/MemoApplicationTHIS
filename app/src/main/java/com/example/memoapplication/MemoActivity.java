@@ -20,6 +20,10 @@ public class MemoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initSaveButton();
         initViewListButton();
+
+
+
+
         //initMemoRadioSetting();
 
 //        Bundle extras = getIntent().getExtras();

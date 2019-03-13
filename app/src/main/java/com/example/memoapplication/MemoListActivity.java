@@ -23,7 +23,7 @@ public class MemoListActivity extends ListActivity {
 
     private static final String STATE_LIST = "State Adapter Data";
 
-
+    ListView listView;
 
     MemoAdapter adapter;
 
@@ -57,7 +57,7 @@ public class MemoListActivity extends ListActivity {
 
         if (memos.size() > 0) {
 
-            ListView listView = getListView();
+            listView = getListView();
 
 
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -83,7 +83,8 @@ public class MemoListActivity extends ListActivity {
                             currentMemoId =  dataSource.getCurrentMemoIdInDB(selectedMemo.getMemoMessage(), selectedMemo.getPriority(), selectedMemo.getDateOfMemo());
 
                             //debugging purposes
-                            Toast.makeText(MemoListActivity.this,Integer.toString(currentMemoId) , Toast.LENGTH_LONG).show();
+                            //Toast.makeText(MemoListActivity.this,Integer.toString(currentMemoId) , Toast.LENGTH_LONG).show();
+
                             dataSource.close();
 
                         }catch (Exception ex) {
@@ -111,25 +112,7 @@ public class MemoListActivity extends ListActivity {
 
     }
 
-//    @Override
-//    public void onResume(){
-//        super.onResume();
-//
-//        MemoDataSource dataSource = new MemoDataSource(this);
-//        try {
-//
-//            dataSource.open();
-//            memos = dataSource.getMemos(sortBy);  //, sortOrder);
-//            dataSource.close();
-//
-//            adapter = new MemoAdapter(this, memos);
-//            setListAdapter(adapter);
-//
-//        } catch (Exception e) {
-//            Toast.makeText(this, "Error retrieving memos", Toast.LENGTH_LONG).show();
-//        }
-//
-//    }
+
 
 
     //THE ON_RESUME METHOD WAS RESETTING THE LIST EVERYTIME YOU TABBED OUT OF THE APP, SO I PUT THE CODE IN ON_CREATE -KELLY

@@ -15,6 +15,7 @@ public class MemoEditActivity extends AppCompatActivity {
 
     private Memo currentMemo;
 
+    Intent intent;
     String memoMessage;
     String priority;
     int currentMemoId;
@@ -35,7 +36,7 @@ public class MemoEditActivity extends AppCompatActivity {
         initViewListButton();
 
         //this gets the memo and priority that the user selected from MemoListActivity, also gets the memoId.
-        Intent intent = getIntent();
+        intent = getIntent();
         memoMessage = intent.getStringExtra("memo");
         priority = intent.getStringExtra("priority");
         currentMemoId = intent.getIntExtra("memoId",-1);
@@ -97,6 +98,19 @@ public class MemoEditActivity extends AppCompatActivity {
 //
 //    }
 
+
+//    @Override
+//    public void onBackPressed() {
+//        super.onBackPressed();
+//
+//
+//
+//
+//
+//
+//
+//    }
+
     public void initViewListButton() {
 
         Button viewMemoButton = (Button) findViewById(R.id.viewMemoButtonEdit);
@@ -148,6 +162,8 @@ public class MemoEditActivity extends AppCompatActivity {
                         Toast.makeText(MemoEditActivity.this, "something went wrong in the  memo DB", Toast.LENGTH_LONG).show();
 
                     }
+
+
 
                 }
 
