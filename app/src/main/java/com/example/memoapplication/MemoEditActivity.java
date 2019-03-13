@@ -106,6 +106,7 @@ public class MemoEditActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(MemoEditActivity.this, MemoListActivity.class);
+
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
 
@@ -147,6 +148,7 @@ public class MemoEditActivity extends AppCompatActivity {
                         Toast.makeText(MemoEditActivity.this, "something went wrong in the  memo DB", Toast.LENGTH_LONG).show();
 
                     }
+
                 }
 
                 else {

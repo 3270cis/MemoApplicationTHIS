@@ -18,6 +18,8 @@ public class MemoListActivity extends ListActivity {
     boolean isDeleting = false;
     MemoDataSource dataSource;
 
+    int currentMemoId;
+
 
     private static final String STATE_LIST = "State Adapter Data";
 
@@ -64,9 +66,6 @@ public class MemoListActivity extends ListActivity {
                 public void onItemClick(AdapterView<?> parent, View itemClicked, int position, long id) {
                     Memo selectedMemo = memos.get(position);
 
-                    //final int currentMemoId =  dataSource.getCurrentMemoIdInDB(selectedMemo.getMemoMessage(), selectedMemo.getPriority(), selectedMemo.getDateOfMemo());
-
-
                     //debugging purposes
                     //String currentMemoIdToString = Integer.toString(currentMemoId);
 
@@ -74,24 +73,28 @@ public class MemoListActivity extends ListActivity {
                         adapter.showDelete(position, itemClicked, MemoListActivity.this, selectedMemo);
                     } else {
 
-                        Intent intent = new Intent(MemoListActivity.this, MemoEditActivity.class);
-                        intent.putExtra("memo", selectedMemo.getMemoMessage());
-                        intent.putExtra("priority", selectedMemo.getPriority());
-                        //intent.putExtra("memoId", currentMemoId);
 
                         try {
+                            //debugging purposes
+                            //final String currentMemoIdSTRING =  dataSource.getCurrentMemoIdInDB(selectedMemo.getMemoMessage(), selectedMemo.getPriority(), selectedMemo.getDateOfMemo());
+
+
                             dataSource.open();
-                            final String currentMemoIdSTRING =  dataSource.getCurrentMemoIdInDB(selectedMemo.getMemoMessage(), selectedMemo.getPriority(), selectedMemo.getDateOfMemo());
+                            currentMemoId =  dataSource.getCurrentMemoIdInDB(selectedMemo.getMemoMessage(), selectedMemo.getPriority(), selectedMemo.getDateOfMemo());
 
                             //debugging purposes
-                            Toast.makeText(MemoListActivity.this,currentMemoIdSTRING , Toast.LENGTH_LONG).show();
-
+                            Toast.makeText(MemoListActivity.this,Integer.toString(currentMemoId) , Toast.LENGTH_LONG).show();
                             dataSource.close();
+
                         }catch (Exception ex) {
                             Toast.makeText(MemoListActivity.this,"DB Problem in List", Toast.LENGTH_LONG).show();
                         }
 
-
+                        Intent intent = new Intent(MemoListActivity.this, MemoEditActivity.class);
+                        intent.putExtra("memo", selectedMemo.getMemoMessage());
+                        intent.putExtra("priority", selectedMemo.getPriority());
+                        intent.putExtra("memoId", currentMemoId);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
 
                        // MemoEditActivity memoEditActivity = new MemoEditActivity(); //Maybe send the memo message and radio through here if can't figure it out
@@ -102,13 +105,33 @@ public class MemoListActivity extends ListActivity {
         }
 
 
-
-
 //        MemoDataSource dataSource = new MemoDataSource(this);
 //        dataSource.getSpecificMemo()
 
 
     }
+
+//    @Override
+//    public void onResume(){
+//        super.onResume();
+//
+//        MemoDataSource dataSource = new MemoDataSource(this);
+//        try {
+//
+//            dataSource.open();
+//            memos = dataSource.getMemos(sortBy);  //, sortOrder);
+//            dataSource.close();
+//
+//            adapter = new MemoAdapter(this, memos);
+//            setListAdapter(adapter);
+//
+//        } catch (Exception e) {
+//            Toast.makeText(this, "Error retrieving memos", Toast.LENGTH_LONG).show();
+//        }
+//
+//    }
+
+
     //THE ON_RESUME METHOD WAS RESETTING THE LIST EVERYTIME YOU TABBED OUT OF THE APP, SO I PUT THE CODE IN ON_CREATE -KELLY
 //    @Override
 //    public void onResume() {

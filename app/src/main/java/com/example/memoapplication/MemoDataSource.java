@@ -112,25 +112,27 @@ public class MemoDataSource {
         return lastId;
     }
 
-    public String getCurrentMemoIdInDB(String memoMessage, String priority, String memoDate) {
-        String currentMemoIdInDB = "";
+    public int getCurrentMemoIdInDB(String memoMessage, String priority, String memoDate) {
+        int currentMemoIdInDB = -1;
         try{
-//            String query = "SELECT priority FROM memo WHERE memoContent =" + memoMessage;
-//            Cursor cursor = database.rawQuery(query, null);
+            String query = "SELECT _id FROM memo WHERE memoContent ='" + memoMessage+"'" + "AND memoDate ='"+ memoDate+"'";
+            Cursor cursor = database.rawQuery(query, null);
 
-            String columnPrioirty = "priority";
-            String columnMemoContent = "memoContent";
+            cursor.moveToFirst();
+            currentMemoIdInDB = cursor.getInt(0);
+            cursor.close();
 
-            String result = DatabaseUtils.stringForQuery(database,
-                    "SELECT priority FROM " + DATABASE_TABLE_NAME +" WHERE memoContent ='"  + memoMessage + "' " , null);
-            currentMemoIdInDB = result;
-//            cursor.moveToPosition(2);
-//            currentMemoIdInDB = cursor.getString(1);
-//            cursor.close();
+            //this one was not working correctly
+//                        String columnPrioirty = "priority";
+//            String columnMemoContent = "memoContent";
+//
+//            String result = DatabaseUtils.stringForQuery(database,
+//                    "SELECT priority FROM " + DATABASE_TABLE_NAME +" WHERE memoContent ='"  + memoMessage + "' " , null);
+//            currentMemoIdInDB = result;
 
         }catch(Exception ex) {
 
-            currentMemoIdInDB = "null";
+            currentMemoIdInDB = -1;
 
         }
 
