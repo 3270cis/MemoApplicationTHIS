@@ -67,9 +67,11 @@ public class MemoListActivity extends ListActivity {
                     } else {
                         Intent intent = new Intent(MemoListActivity.this, MemoEditActivity.class);
                         intent.putExtra("memo", selectedMemo.getMemoMessage());
-
-                        MemoEditActivity memoEditActivity = new MemoEditActivity(); //Maybe send the memo message and radio through here if can't figure it out
+                        intent.putExtra("priority", selectedMemo.getPriority());
                         startActivity(intent);
+
+                       // MemoEditActivity memoEditActivity = new MemoEditActivity(); //Maybe send the memo message and radio through here if can't figure it out
+
                     }
                 }
             });

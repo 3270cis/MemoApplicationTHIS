@@ -7,8 +7,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
+//just a comment
 public class MemoEditActivity extends AppCompatActivity {
 
     private Memo currentMemo;
@@ -20,14 +22,20 @@ public class MemoEditActivity extends AppCompatActivity {
         initSaveButton();
         initViewListButton();
 
-        //this gets the memo that the user selected from MemoListActivity
-        Intent i = getIntent();
-        String memoMessage = i.getStringExtra("memo");
+        //this gets the memo and priority that the user selected from MemoListActivity
+        Intent intent = getIntent();
+        String memoMessage = intent.getStringExtra("memo");
+        String priority = intent.getStringExtra("priority");
 
         //this puts the memo message on the box so the user can edit it
         EditText theMemoMessage = (EditText) findViewById(R.id.memoMessageEdit);
         theMemoMessage.setText(memoMessage);
         theMemoMessage.setEnabled(true);
+
+
+        //FIX ME!!!!
+        RadioGroup theRadioPriority = (RadioGroup) findViewById(R.id.radioGroupEdit);
+        //theRadioPriority.
 
 
         //initMemoRadioSetting();
