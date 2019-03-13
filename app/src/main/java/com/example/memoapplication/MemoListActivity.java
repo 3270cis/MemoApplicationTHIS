@@ -4,6 +4,7 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,6 +19,10 @@ public class MemoListActivity extends ListActivity {
     ArrayList<Memo> memos;
     boolean isDeleting = false;
 
+    private static final String STATE_LIST = "State Adapter Data";
+
+
+
     MemoAdapter adapter;
 
     @Override
@@ -28,25 +33,18 @@ public class MemoListActivity extends ListActivity {
         initDeleteButton();
         initSortByPriorityButton();
 
-//        MemoDataSource ds = new MemoDataSource(this);
-//        ds.getSpecificMemo()
 
-
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();                                                                                   //the list will displays newest memos on top
         String sortBy = getSharedPreferences("MyMemoListPreferences", Context.MODE_PRIVATE).getString("sortfield", "memoDate DESC");
         // String sortOrder = getSharedPreferences("MyMemoListPreferences", Context.MODE_PRIVATE).getString("sortorder", "ASC");
 
         MemoDataSource ds = new MemoDataSource(this);
         try {
+
             ds.open();
             memos = ds.getMemos(sortBy);  //, sortOrder);
             ds.close();
 
-            adapter = new MemoAdapter(this,  memos);
+            adapter = new MemoAdapter(this, memos);
             setListAdapter(adapter);
 
         } catch (Exception e) {
@@ -75,13 +73,68 @@ public class MemoListActivity extends ListActivity {
             });
         }
 
-//        else {
-//            Intent intent = new Intent(MemoListActivity.this, MemoActivity.class);
-//            startActivity(intent);
-//        }
+
+
+
+//        MemoDataSource ds = new MemoDataSource(this);
+//        ds.getSpecificMemo()
 
 
     }
+    //THE ON_RESUME METHOD WAS RESETTING THE LIST EVERYTIME YOU TABBED OUT OF THE APP, SO I PUT IT IN THE ON CREATE -KELLY
+//    @Override
+//    public void onResume() {
+//        super.onResume();                                                                                   //the list will displays newest memos on top
+//        String sortBy = getSharedPreferences("MyMemoListPreferences", Context.MODE_PRIVATE).getString("sortfield", "memoDate DESC");
+//        // String sortOrder = getSharedPreferences("MyMemoListPreferences", Context.MODE_PRIVATE).getString("sortorder", "ASC");
+//
+//        MemoDataSource ds = new MemoDataSource(this);
+//        try {
+//
+//            ds.open();
+//            memos = ds.getMemos(sortBy);  //, sortOrder);
+//            ds.close();
+//
+//            adapter = new MemoAdapter(this, memos);
+//            setListAdapter(adapter);
+//
+//        } catch (Exception e) {
+//            Toast.makeText(this, "Error retrieving memos", Toast.LENGTH_LONG).show();
+//        }
+//
+//        if (memos.size() > 0) {
+//
+//            ListView listView = getListView();
+//
+//
+//            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//
+//                @Override
+//                public void onItemClick(AdapterView<?> parent, View itemClicked, int position, long id) {
+//                    Memo selectedMemo = memos.get(position);
+//
+//                    if (isDeleting) {
+//                        adapter.showDelete(position, itemClicked, MemoListActivity.this, selectedMemo);
+//                    } else {
+//                        Intent intent = new Intent(MemoListActivity.this, MemoEditActivity.class);
+//                        intent.putExtra("memoid", selectedMemo.getMemoID());
+//                        startActivity(intent);
+//                    }
+//                }
+//            });
+//        }
+//
+////        else {
+////            Intent intent = new Intent(MemoListActivity.this, MemoActivity.class);
+////            startActivity(intent);
+////        }
+//
+//    }
+
+
+
+
+
 
     private void initDeleteButton() {
         final Button deleteButton = (Button) findViewById(R.id.buttonDelete);
@@ -106,7 +159,7 @@ public class MemoListActivity extends ListActivity {
             @Override
             public void onClick(View v) {
 
-                String sortBy = getSharedPreferences("MyMemoListPreferences", Context.MODE_PRIVATE).getString("sortfield", "priority");
+                 String sortBy = getSharedPreferences("MyMemoListPreferences", Context.MODE_PRIVATE).getString("sortfield", "priority");
 
 
                 MemoDataSource ds = new MemoDataSource(MemoListActivity.this);
@@ -115,8 +168,12 @@ public class MemoListActivity extends ListActivity {
                     memos = ds.getMemosByPriority(sortBy);
                     ds.close();
 
+
+
                     adapter = new MemoAdapter(MemoListActivity.this,  memos);
                     setListAdapter(adapter);
+
+
 
                 } catch (Exception e) {
                     Toast.makeText(MemoListActivity.this, "Error sorting by priority", Toast.LENGTH_LONG).show();

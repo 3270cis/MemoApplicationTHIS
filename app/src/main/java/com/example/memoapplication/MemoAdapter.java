@@ -17,6 +17,8 @@ public class MemoAdapter extends ArrayAdapter<Memo> {
     private ArrayList<Memo> items;
     private Context adapterContext;
 
+
+
     public MemoAdapter(Context context, ArrayList<Memo> items) {
         super(context, R.layout.list_item, items);
         adapterContext = context;
@@ -57,6 +59,7 @@ public class MemoAdapter extends ArrayAdapter<Memo> {
                 priority.setText(memo.getPriority());
             }
 
+            // NOT NECESSARY
             //if the position is an even number, then the contact name text will be red
 //            if(position % 2 == 0 ) {
 //                memoMessage.setTextColor(Color.RED);
@@ -117,6 +120,10 @@ public class MemoAdapter extends ArrayAdapter<Memo> {
         final Button b = (Button) v.findViewById(R.id.buttonDeleteMemo);
         b.setVisibility(View.INVISIBLE);
         b.setOnClickListener(null);
+    }
+
+    public ArrayList<Memo> getList() {
+        return new ArrayList<Memo>(items);
     }
 
 
