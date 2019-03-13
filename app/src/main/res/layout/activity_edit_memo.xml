@@ -27,7 +27,7 @@
             app:layout_constraintVertical_bias="0.035" />
 
         <EditText
-            android:id="@+id/memoMessage"
+            android:id="@+id/memoMessageEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -44,21 +44,21 @@
             android:layout_height="wrap_content">
 
             <RadioButton
-                android:id="@+id/low"
+                android:id="@+id/lowEdit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Low" />
 
             <RadioButton
-                android:id="@+id/medium"
+                android:id="@+id/mediumEdit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Medium" />
 
             <RadioButton
-                android:id="@+id/high"
+                android:id="@+id/highEdit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -66,13 +66,13 @@
         </RadioGroup>
 
         <Button
-            android:id="@+id/saveButton"
+            android:id="@+id/saveButtonEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Save" />
 
         <Button
-            android:id="@+id/viewMemoButton"
+            android:id="@+id/viewMemoButtonEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="VIEW MEMOS" />

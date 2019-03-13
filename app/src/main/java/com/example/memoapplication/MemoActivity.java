@@ -13,7 +13,6 @@ public class MemoActivity extends AppCompatActivity {
 
 
     private Memo currentMemo;
-    RadioButton radioButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +24,7 @@ public class MemoActivity extends AppCompatActivity {
 
 //        Bundle extras = getIntent().getExtras();
 //        if (extras != null) {
-//            initMemo(extras.getInt("memoid"));
+//            initMemo(extras.getString(currentMemo.getMemoMessage()));
 //        }
 //
 //        else {
@@ -34,7 +33,7 @@ public class MemoActivity extends AppCompatActivity {
 
     }
 
-//    public void initMemo(int id) {
+//    public void initMemo(String id) {
 //
 //        MemoDataSource ds = new MemoDataSource(MemoActivity.this);
 //        try {
@@ -47,8 +46,8 @@ public class MemoActivity extends AppCompatActivity {
 //        }
 //
 //
-////        EditText editMemoMessage = (EditText) findViewById(R.id.memoMessage);
-////        editMemoMessage.setText(currentMemo.getMemoMessage());
+//        EditText editMemoMessage = (EditText) findViewById(R.id.memoMessage);
+//        editMemoMessage.setText(currentMemo.getMemoMessage());
 //
 //
 //    }
@@ -154,6 +153,7 @@ public class MemoActivity extends AppCompatActivity {
         });
 
     }
+
 
 
 

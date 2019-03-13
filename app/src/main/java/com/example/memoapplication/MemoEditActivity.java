@@ -12,7 +12,6 @@ import android.widget.Toast;
 public class MemoEditActivity extends AppCompatActivity {
 
     private Memo currentMemo;
-    RadioButton radioButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,11 +19,22 @@ public class MemoEditActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_memo);
         initSaveButton();
         initViewListButton();
+
+        //this gets the memo that the user selected from MemoListActivity
+        Intent i = getIntent();
+        String memoMessage = i.getStringExtra("memo");
+
+        //this puts the memo message on the box so the user can edit it
+        EditText theMemoMessage = (EditText) findViewById(R.id.memoMessageEdit);
+        theMemoMessage.setText(memoMessage);
+        theMemoMessage.setEnabled(true);
+
+
         //initMemoRadioSetting();
 
 //        Bundle extras = getIntent().getExtras();
 //        if (extras != null) {
-//            initMemo(extras.getInt("memoid"));
+//            initMemo(extras.getString(currentMemo.getMemoMessage()));
 //        }
 //
 //        else {
@@ -33,9 +43,9 @@ public class MemoEditActivity extends AppCompatActivity {
 
     }
 
-//    public void initMemo(int id) {
+//    public void initMemo(String id) {
 //
-//        MemoDataSource ds = new MemoDataSource(MemoActivity.this);
+//        MemoDataSource ds = new MemoDataSource(MemoEditActivity.this);
 //        try {
 //            ds.open();
 //            currentMemo = ds.getSpecificMemo(id);
@@ -46,15 +56,15 @@ public class MemoEditActivity extends AppCompatActivity {
 //        }
 //
 //
-////        EditText editMemoMessage = (EditText) findViewById(R.id.memoMessage);
-////        editMemoMessage.setText(currentMemo.getMemoMessage());
+//        EditText editMemoMessage = (EditText) findViewById(R.id.memoMessage);
+//        editMemoMessage.setText(currentMemo.getMemoMessage());
 //
 //
 //    }
 
     public void initViewListButton() {
 
-        Button viewMemoButton = (Button) findViewById(R.id.viewMemoButton);
+        Button viewMemoButton = (Button) findViewById(R.id.viewMemoButtonEdit);
 
         viewMemoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +78,80 @@ public class MemoEditActivity extends AppCompatActivity {
         });
 
     }
+
+    //FIX US
+    public void initSaveButton() {
+
+        Button saveButton = (Button) findViewById(R.id.saveButtonEdit);
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                String radioValue = getRadioValue();
+                String memoMessage = getMemoMessage();
+
+                currentMemo = new Memo(memoMessage,radioValue);
+
+                //comment
+
+                MemoDataSource ds = new MemoDataSource(MemoEditActivity.this);
+
+                //this inserts the current memo object into the database
+                try {
+                    ds.open();
+                    ds.insertMemo(currentMemo);
+                    ds.close();
+                    Toast.makeText(MemoEditActivity.this, "Updated into Memo!", Toast.LENGTH_LONG).show();
+
+
+                } catch (Exception ex) {
+                    Toast.makeText(MemoEditActivity.this, "something went wrong in the  memo DB", Toast.LENGTH_LONG).show();
+
+                }
+
+
+            }
+        });
+
+    }
+
+
+
+    public String getMemoMessage() {
+
+        EditText memoMessage = (EditText) findViewById(R.id.memoMessageEdit);
+
+        return memoMessage.getText().toString();
+
+    }
+
+    public String getRadioValue() {
+
+        // RadioButton radioButtonLow=(RadioButton)findViewById(R.id.low);
+        RadioButton radioButtonMedium=(RadioButton)findViewById(R.id.mediumEdit);
+        RadioButton radioButtonHigh=(RadioButton)findViewById(R.id.highEdit);
+
+
+
+        if(radioButtonMedium.isChecked()){
+            return "Medium";
+        }
+
+        else if(radioButtonHigh.isChecked()){
+            return "High";
+
+        }
+
+        //the default return is Low, even if the user doesn't even specify the priority
+        else {
+            return "Low";
+        }
+
+    }
+
+
 //
 //    private void initSaveButton() {
 //        Button saveButton = (Button) findViewById(R.id.saveButton);
@@ -117,76 +201,6 @@ public class MemoEditActivity extends AppCompatActivity {
 //        });
 //    }
 
-    public void initSaveButton() {
-
-        Button saveButton = (Button) findViewById(R.id.saveButton);
-
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                String radioValue = getRadioValue();
-                String memoMessage = getMemoMessage();
-
-                currentMemo = new Memo(memoMessage,radioValue);
-
-                //comment
-
-                MemoDataSource ds = new MemoDataSource(MemoEditActivity.this);
-
-                //this inserts the current memo object into the database
-                try {
-                    ds.open();
-                    ds.insertMemo(currentMemo);
-                    ds.close();
-                    Toast.makeText(MemoEditActivity.this, "Updated into Memo!", Toast.LENGTH_LONG).show();
-
-
-                } catch (Exception ex) {
-                    Toast.makeText(MemoEditActivity.this, "something went wrong in the  memo DB", Toast.LENGTH_LONG).show();
-
-                }
-
-
-            }
-        });
-
-    }
-
-
-
-    public String getMemoMessage() {
-
-        EditText memoMessage = (EditText) findViewById(R.id.memoMessage);
-
-        return memoMessage.getText().toString();
-
-    }
-
-    public String getRadioValue() {
-
-        // RadioButton radioButtonLow=(RadioButton)findViewById(R.id.low);
-        RadioButton radioButtonMedium=(RadioButton)findViewById(R.id.medium);
-        RadioButton radioButtonHigh=(RadioButton)findViewById(R.id.high);
-
-
-
-        if(radioButtonMedium.isChecked()){
-            return "Medium";
-        }
-
-        else if(radioButtonHigh.isChecked()){
-            return "High";
-
-        }
-
-        //the default return is Low, even if the user doesn't even specify the priority
-        else {
-            return "Low";
-        }
-
-    }
 
 
     //i dont think we need this
