@@ -129,14 +129,18 @@ public class MemoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
+                //gets the low,med,high from the gui, line 170
                 String radioValue = getRadioValue();
+
+                //gets the memo from the gui, line 179
                 String memoMessage = getMemoMessage();
 
+
+                //assigns the memo and radio value(low, med or high)  into a memo object
                 currentMemo = new Memo(memoMessage,radioValue);
 
-                //comment
 
+                //create database object
                 MemoDataSource ds = new MemoDataSource(MemoActivity.this);
 
                 //this inserts the current memo object into the database
@@ -144,6 +148,8 @@ public class MemoActivity extends AppCompatActivity {
                     ds.open();
                     ds.insertMemo(currentMemo);
                     ds.close();
+
+                    //notify the user
                     Toast.makeText(MemoActivity.this, "Entered into Memo!", Toast.LENGTH_LONG).show();
 
 
@@ -163,12 +169,15 @@ public class MemoActivity extends AppCompatActivity {
 
     public String getMemoMessage() {
 
+        //extracts the memo from gui into string
         EditText memoMessage = (EditText) findViewById(R.id.memoMessage);
 
         return memoMessage.getText().toString();
 
     }
 
+
+    //extracts the radio value (low,med.,high) as a string
     public String getRadioValue() {
 
         // RadioButton radioButtonLow=(RadioButton)findViewById(R.id.low);

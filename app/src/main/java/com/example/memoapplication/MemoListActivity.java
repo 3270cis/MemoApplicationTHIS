@@ -21,10 +21,9 @@ public class MemoListActivity extends ListActivity {
     int currentMemoId;
 
 
-    private static final String STATE_LIST = "State Adapter Data";
+    //private static final String STATE_LIST = "State Adapter Data";
 
     ListView listView;
-
     MemoAdapter adapter;
 
     @Override
@@ -45,9 +44,12 @@ public class MemoListActivity extends ListActivity {
         try {
 
             dataSource.open();
+
+            //the memos are displayed by date, by default
             memos = dataSource.getMemos(sortBy);  //, sortOrder);
             dataSource.close();
 
+            //setting the memos onto list gui
             adapter = new MemoAdapter(this, memos);
             setListAdapter(adapter);
 
@@ -59,7 +61,6 @@ public class MemoListActivity extends ListActivity {
 
             listView = getListView();
 
-
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                 @Override
@@ -70,6 +71,7 @@ public class MemoListActivity extends ListActivity {
                     //String currentMemoIdToString = Integer.toString(currentMemoId);
 
                     if (isDeleting) {
+
                         adapter.showDelete(position, itemClicked, MemoListActivity.this, selectedMemo);
                     } else {
 
@@ -80,6 +82,8 @@ public class MemoListActivity extends ListActivity {
 
 
                             dataSource.open();
+
+                            //it gets the memo id from the database
                             currentMemoId =  dataSource.getCurrentMemoIdInDB(selectedMemo.getMemoMessage(), selectedMemo.getPriority(), selectedMemo.getDateOfMemo());
 
                             //debugging purposes
@@ -91,6 +95,7 @@ public class MemoListActivity extends ListActivity {
                             Toast.makeText(MemoListActivity.this,"DB Problem in List", Toast.LENGTH_LONG).show();
                         }
 
+                        //create the intent and send memo, priority, and the memo id through the next activity
                         Intent intent = new Intent(MemoListActivity.this, MemoEditActivity.class);
                         intent.putExtra("memo", selectedMemo.getMemoMessage());
                         intent.putExtra("priority", selectedMemo.getPriority());
@@ -193,17 +198,20 @@ public class MemoListActivity extends ListActivity {
             @Override
             public void onClick(View v) {
 
+                //get the stored preferences
                  String sortBy = getSharedPreferences("MyMemoListPreferences", Context.MODE_PRIVATE).getString("sortfield", "priority");
 
 
                 MemoDataSource ds = new MemoDataSource(MemoListActivity.this);
                 try {
                     ds.open();
+
+                    //getting the memos ordered by High, Medium, Low
                     memos = ds.getMemosByPriority(sortBy);
                     ds.close();
 
 
-
+                    //connects the adapter to show the list onto the gui
                     adapter = new MemoAdapter(MemoListActivity.this,  memos);
                     setListAdapter(adapter);
 
@@ -224,22 +232,26 @@ public class MemoListActivity extends ListActivity {
             public void onClick(View v) {
 
                 String sortBy = getSharedPreferences("MyMemoListPreferences", Context.MODE_PRIVATE).getString("sortfield", "memoDate DESC");
+
+                //not needed
                 // String sortOrder = getSharedPreferences("MyMemoListPreferences", Context.MODE_PRIVATE).getString("sortorder", "ASC");
 
                 MemoDataSource ds = new MemoDataSource(MemoListActivity.this);
                 try {
 
+                    //when the users presses sort by date, it gets the memo data from the database
                     ds.open();
                     memos = ds.getMemos(sortBy); //, sortOrder);
                     ds.close();
 
+                    //set the list to display memos ordered by date
                     adapter = new MemoAdapter(MemoListActivity.this, memos);
                     setListAdapter(adapter);
                 } catch (Exception e) {
                     Toast.makeText(MemoListActivity.this, "Error retrieving memos", Toast.LENGTH_LONG).show();
                 }
 
-
+//                  NOT NEEDED, was resetting the view everytime
 //                if (memos.size() > 0) {
 //
 //                    ListView listView = getListView();

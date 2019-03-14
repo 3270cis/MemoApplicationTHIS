@@ -25,6 +25,8 @@ public class MemoAdapter extends ArrayAdapter<Memo> {
         this.items = items;
     }
 
+
+    //shows the memo, priorty, and date
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View v = convertView;
@@ -32,6 +34,8 @@ public class MemoAdapter extends ArrayAdapter<Memo> {
             Memo memo = items.get(position);
 
             if (v == null) {
+
+                //instatiate layout xml file to be used
                 LayoutInflater vi = (LayoutInflater) adapterContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 v = vi.inflate(R.layout.list_item, null);
             }
@@ -46,6 +50,7 @@ public class MemoAdapter extends ArrayAdapter<Memo> {
             memoMessage.setText(memo.getMemoMessage());
             memoDate.setText(memo.getDateOfMemo());
 
+            //sets the text color of the priority
             if(memo.getPriority().equals("Low")) {
                 priority.setTextColor(Color.BLACK);
                 priority.setText(memo.getPriority());
@@ -85,7 +90,8 @@ public class MemoAdapter extends ArrayAdapter<Memo> {
     public void showDelete(final int position, final View convertView, final Context context, final Memo memo) {
         View v = convertView;
         final Button b = (Button) v.findViewById(R.id.buttonDeleteMemo);
-        //2
+
+
         if (b.getVisibility()==View.INVISIBLE) {
             b.setVisibility(View.VISIBLE);
             b.setOnClickListener(new View.OnClickListener() {
@@ -102,6 +108,7 @@ public class MemoAdapter extends ArrayAdapter<Memo> {
         }
     }
 
+    //deletes the memo
     private void deleteOption(int memoToDelete, Context context) {
         MemoDataSource db = new MemoDataSource(context);
         try {
@@ -114,7 +121,8 @@ public class MemoAdapter extends ArrayAdapter<Memo> {
         }
         this.notifyDataSetChanged();
     }
-    //4
+
+    //hides the red Delete button
     public void hideDelete(int position, View convertView, Context context) {
         View v = convertView;
         final Button b = (Button) v.findViewById(R.id.buttonDeleteMemo);
