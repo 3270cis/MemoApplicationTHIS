@@ -113,6 +113,8 @@ public class MemoDataSource {
         return lastId;
     }
 
+
+    //this gets the current memo ID in the database
     public int getCurrentMemoIdInDB(String memoMessage, String priority, String memoDate) {
         int currentMemoIdInDB = -1;
         try{
@@ -171,7 +173,7 @@ public class MemoDataSource {
         return memos;
     }
 
-    public ArrayList<Memo> getMemosByPriority(String sortField) {
+    public ArrayList<Memo> getMemosByHighPriority(String sortField) {
         ArrayList<Memo> memos = new ArrayList<Memo>();
         try {
             String query = "SELECT  * FROM memo ORDER BY CASE " + sortField +
@@ -201,6 +203,72 @@ public class MemoDataSource {
             memos = new ArrayList<Memo>();
         }
         return memos;
+    }
+
+    public  ArrayList<Memo> getMemosByMediumPriority(String sortField) {
+        ArrayList<Memo> memos = new ArrayList<Memo>();
+        try {
+            String query = "SELECT  * FROM memo ORDER BY CASE " + sortField +
+                    "    WHEN 'Medium' THEN 1\n" +
+                    "    WHEN 'Low' THEN 2\n" +
+                    "    WHEN 'High' THEN 3\n" +
+                    "    END ";
+
+            Cursor cursor = database.rawQuery(query, null);
+
+            Memo newMemo;
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                newMemo = new Memo();
+                newMemo.setMemoID(cursor.getInt(0));
+                newMemo.setMemoMessage(cursor.getString(1));
+                newMemo.setPriority(cursor.getString(2));
+                newMemo.setDateOfMemo(cursor.getString(3));
+                ;
+
+                memos.add(newMemo);
+                cursor.moveToNext();
+            }
+            cursor.close();
+        }
+        catch (Exception e) {
+            memos = new ArrayList<Memo>();
+        }
+        return memos;
+
+    }
+
+    public  ArrayList<Memo> getMemosByLowPriority(String sortField) {
+        ArrayList<Memo> memos = new ArrayList<Memo>();
+        try {
+            String query = "SELECT  * FROM memo ORDER BY CASE " + sortField +
+                    "    WHEN 'Low' THEN 1\n" +
+                    "    WHEN 'Medium' THEN 2\n" +
+                    "    WHEN 'High' THEN 3\n" +
+                    "    END ";
+
+            Cursor cursor = database.rawQuery(query, null);
+
+            Memo newMemo;
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                newMemo = new Memo();
+                newMemo.setMemoID(cursor.getInt(0));
+                newMemo.setMemoMessage(cursor.getString(1));
+                newMemo.setPriority(cursor.getString(2));
+                newMemo.setDateOfMemo(cursor.getString(3));
+                ;
+
+                memos.add(newMemo);
+                cursor.moveToNext();
+            }
+            cursor.close();
+        }
+        catch (Exception e) {
+            memos = new ArrayList<Memo>();
+        }
+        return memos;
+
     }
 
 

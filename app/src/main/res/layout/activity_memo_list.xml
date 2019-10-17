@@ -21,18 +21,36 @@
         android:id="@+id/buttonDelete" />
 
     <Button
-        android:id="@+id/priorityButton"
-        android:layout_width="186dp"
+        android:id="@+id/priorityButtonLow"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:background="@drawable/memo_list_button"
-        android:text="Sort By Importance"
+        android:text="Low"
+        android:textSize="15dp"/>
+
+    <Button
+        android:id="@+id/priorityButtonMedium"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/priorityButtonLow"
+        android:background="@drawable/memo_list_button"
+        android:text="Med"
+        android:textSize="15dp"/>
+
+    <Button
+        android:id="@+id/priorityButtonHigh"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/priorityButtonMedium"
+        android:background="@drawable/memo_list_button"
+        android:text="High"
         android:textSize="15dp" />
 
     <Button
         android:id="@+id/dateButton"
         android:layout_width="135dp"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/priorityButton"
+        android:layout_toRightOf="@id/priorityButtonHigh"
         android:background="@drawable/memo_list_button"
         android:text="Sort by Date"
         android:textSize="15dp" />

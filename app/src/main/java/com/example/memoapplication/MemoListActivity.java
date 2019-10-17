@@ -32,7 +32,9 @@ public class MemoListActivity extends ListActivity {
         setContentView(R.layout.activity_memo_list);
 
         initDeleteButton();
-        initSortByPriorityButton();
+        initSortByPriorityHighButton();
+        initSortByPriorityMediumButton();
+        initSortByPriorityLowButton();
         initSortByDateButton();
 
 
@@ -67,7 +69,7 @@ public class MemoListActivity extends ListActivity {
                 public void onItemClick(AdapterView<?> parent, View itemClicked, int position, long id) {
                     Memo selectedMemo = memos.get(position);
 
-                    //debugging purposes
+                    //debugging purposes, ignore
                     //String currentMemoIdToString = Integer.toString(currentMemoId);
 
                     if (isDeleting) {
@@ -77,7 +79,7 @@ public class MemoListActivity extends ListActivity {
 
 
                         try {
-                            //debugging purposes
+                            //debugging purposes, ignore
                             //final String currentMemoIdSTRING =  dataSource.getCurrentMemoIdInDB(selectedMemo.getMemoMessage(), selectedMemo.getPriority(), selectedMemo.getDateOfMemo());
 
 
@@ -86,7 +88,7 @@ public class MemoListActivity extends ListActivity {
                             //it gets the memo id from the database
                             currentMemoId =  dataSource.getCurrentMemoIdInDB(selectedMemo.getMemoMessage(), selectedMemo.getPriority(), selectedMemo.getDateOfMemo());
 
-                            //debugging purposes
+                            //debugging purposes, ignore
                             //Toast.makeText(MemoListActivity.this,Integer.toString(currentMemoId) , Toast.LENGTH_LONG).show();
 
                             dataSource.close();
@@ -103,7 +105,6 @@ public class MemoListActivity extends ListActivity {
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
 
-                       // MemoEditActivity memoEditActivity = new MemoEditActivity(); //Maybe send the memo message and radio through here if can't figure it out
 
                     }
                 }
@@ -192,14 +193,53 @@ public class MemoListActivity extends ListActivity {
         });
     }
 
-    public void initSortByPriorityButton() {
-        Button priorityButton = (Button) findViewById(R.id.priorityButton);
+    public void initSortByPriorityHighButton() {
+        Button priorityButton = (Button) findViewById(R.id.priorityButtonHigh);
         priorityButton.setOnClickListener(new View.OnClickListener() {
+
+
+            @Override
+            public void onClick(View v) {
+
+                        //get the stored preferences
+                        String sortBy = getSharedPreferences("MyMemoListPreferences", Context.MODE_PRIVATE).getString("sortfield", "priority");
+
+
+                        MemoDataSource ds = new MemoDataSource(MemoListActivity.this);
+                        try {
+                            ds.open();
+
+                            //getting the memos ordered by High, Medium, Low
+                            memos = ds.getMemosByHighPriority(sortBy);
+                            ds.close();
+
+
+                            //connects the adapter to show the list onto the gui
+                            adapter = new MemoAdapter(MemoListActivity.this, memos);
+                            setListAdapter(adapter);
+
+
+                        } catch (Exception e) {
+                            Toast.makeText(MemoListActivity.this, "Error sorting by priority", Toast.LENGTH_LONG).show();
+                        }
+
+                    }
+
+        });
+
+
+    }
+
+    public void initSortByPriorityMediumButton() {
+        Button priorityButton = (Button) findViewById(R.id.priorityButtonMedium);
+        priorityButton.setOnClickListener(new View.OnClickListener() {
+
+
             @Override
             public void onClick(View v) {
 
                 //get the stored preferences
-                 String sortBy = getSharedPreferences("MyMemoListPreferences", Context.MODE_PRIVATE).getString("sortfield", "priority");
+                String sortBy = getSharedPreferences("MyMemoListPreferences", Context.MODE_PRIVATE).getString("sortfield", "priority");
 
 
                 MemoDataSource ds = new MemoDataSource(MemoListActivity.this);
@@ -207,14 +247,13 @@ public class MemoListActivity extends ListActivity {
                     ds.open();
 
                     //getting the memos ordered by High, Medium, Low
-                    memos = ds.getMemosByPriority(sortBy);
+                    memos = ds.getMemosByMediumPriority(sortBy);
                     ds.close();
 
 
                     //connects the adapter to show the list onto the gui
-                    adapter = new MemoAdapter(MemoListActivity.this,  memos);
+                    adapter = new MemoAdapter(MemoListActivity.this, memos);
                     setListAdapter(adapter);
-
 
 
                 } catch (Exception e) {
@@ -222,7 +261,47 @@ public class MemoListActivity extends ListActivity {
                 }
 
             }
+
         });
+
+
+    }
+
+    public void initSortByPriorityLowButton() {
+        Button priorityButton = (Button) findViewById(R.id.priorityButtonLow);
+        priorityButton.setOnClickListener(new View.OnClickListener() {
+
+
+            @Override
+            public void onClick(View v) {
+
+                //get the stored preferences
+                String sortBy = getSharedPreferences("MyMemoListPreferences", Context.MODE_PRIVATE).getString("sortfield", "priority");
+
+
+                MemoDataSource ds = new MemoDataSource(MemoListActivity.this);
+                try {
+                    ds.open();
+
+                    //getting the memos ordered by High, Medium, Low
+                    memos = ds.getMemosByLowPriority(sortBy);
+                    ds.close();
+
+
+                    //connects the adapter to show the list onto the gui
+                    adapter = new MemoAdapter(MemoListActivity.this, memos);
+                    setListAdapter(adapter);
+
+
+                } catch (Exception e) {
+                    Toast.makeText(MemoListActivity.this, "Error sorting by priority", Toast.LENGTH_LONG).show();
+                }
+
+            }
+
+        });
+
+
     }
 
     public void initSortByDateButton(){

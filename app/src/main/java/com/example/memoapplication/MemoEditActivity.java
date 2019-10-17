@@ -51,6 +51,8 @@ public class MemoEditActivity extends AppCompatActivity {
         radioButtonMedium=(RadioButton)findViewById(R.id.mediumEdit);
         radioButtonHigh=(RadioButton)findViewById(R.id.highEdit);
 
+        //autiomactically sets the priority of the chosen memo picked from the memo list on the editMemoActivity
+        //for example, if you picked a memo that has High priority, then it will automactically set the High radio button in EditActivity
         if(priority.equals("Low")){
             radioButtonLow.setChecked(true);
         }
@@ -163,6 +165,7 @@ public class MemoEditActivity extends AppCompatActivity {
 
                     }
 
+                    //once the user presses save, it goes back to the MemoListActivity
                     Intent intent = new Intent(MemoEditActivity.this, MemoListActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
@@ -170,6 +173,8 @@ public class MemoEditActivity extends AppCompatActivity {
                 }
 
                 else {
+
+                    //no change of memo or priority? then no updates
                     Toast.makeText(MemoEditActivity.this,"no update :)", Toast.LENGTH_LONG).show();
                 }
 
