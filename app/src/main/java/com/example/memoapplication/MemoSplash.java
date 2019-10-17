@@ -23,7 +23,7 @@ public class MemoSplash extends AppCompatActivity {
                 finish();
             }
         },SPLASH_TIME_OUT);
-        //comment
+        //comment1
 
     }
 }
